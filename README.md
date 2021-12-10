@@ -1,1 +1,141 @@
 # Learning-Unity-Game-Engine
+
+DATE:	02-12-2021
+	
+1. Destroying Objects
+    - destorying my object that the script is attached to
+    - destorying object with my object that script is attached to
+   
+2. Detecting Mouse Clicks
+    - destorying object with mouse click
+   
+3. Taking Keyboard input
+    - destorying object with Keyboard input like pressing the space key
+   
+4. Adding Physics to the object
+	- like adding forse in the pertecular direction to the object to make
+	  it move using Vectors
+	- moving objects with Velocity
+	
+5. Detecting Collisions
+	- by detecting collisions we can make any object that collied with
+	  my object disappear
+	  
+6. Loading New Level using UnityEngine.SceneManagement
+	- we can load any scene or level with the press of a keyboard key.
+	
+7. Display Text On The Screen
+	- we displyed "You Win" text on the screen after
+	
+DATE:	03-12-2021
+	
+8. Spawning GameObjects in Unity 3D
+	- learned how to spawn a 3D game object
+	- learned how to spawn a 3D game object with the keyboard input
+	- learned how to spawn a 3D game object with the mouse click at mouse position
+	- changing colour on collision(One colour or Random)
+	
+9. Creating Materials for Unity 3D objects
+	- and changing there properties within C# Script
+
+DATE:	04-12-2021
+
+10. Prefabs and Materials in Unity 3D
+	- learned how to make Prefabs of objects in unity
+	- learned how to make and apply materials to the objects
+	
+11. Creating 3D Player Movement
+	- learned how to rotate main camera to where player goes
+	- fixing some camera view problems so that our input don't change
+	  when player get too far away from camera
+	  
+12. Creating Collectable Coins
+	- making some Sphere object and convert them into coins
+	- making Coins child of a parent empty object "Coins Parent" so when we 
+	  change there shapes but want to keep there rotation same as parent 
+	- making our player can collect coins when it touch them and after
+	  that make coins object disappear
+	- Adding Rotation to the Coins so they spin instead of stay still
+	
+13. Playing Audio in Unity Engine
+	- learned how to play audio when our player collect a coin
+	
+DATE:	05-12-2021
+
+14. Taking input form mouse
+	
+	- Taking input form mouse in screen cordinates
+	  and converting it to the world cordinates
+	- Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+	
+15. 2D Player Movement using trasform component of unity without using physics(rigidbody2D)
+	
+	- 2D Player Movement using trasform component of unity
+	  without using physics(rigidbody2D)
+	- 2D Player follows our mouse position
+	- 2D Player goes where our mouse clicks
+	
+16. Working with 2D Sprites
+	
+	- make our 2d sprite player move in horizontal directions
+	- make our 2d sprite player flip when it goes from left to right
+	
+DATE:	06-12-2021
+
+17. Working with Tags
+	
+	- Search and Find any one GameObject with tag
+	  Using-> GameObject cube = GameObject.FindWithTag("Cube");
+	- Search and Destroy all game objects with the same tag with the help of Arrays
+	  Using-> GameObject[] cubes;
+			cubes = GameObject.FindGameObjectsWithTag("Cube");
+	- Destroy an game object with the tag "Cube" with mouse click
+	  Using-> void OnMouseDown() function
+	  
+DATE:	07-12-2021
+
+HOLIDAY FOR ESCAPING FROM BURNOUT
+
+DATE:	08-12-2021
+
+18. Adding Delay Using Invoke Function
+
+	- Destroy all game objects after a delay using Invoke Function
+	  Using-> Invoke("DestroyAll", 2f);
+	  
+19. Adding Delay Using Coroutine
+	
+	- IEnumerator FunctionName(){
+	     yield return new WaitForSeconds(2);
+	  }
+	- call in the start function
+	Using-> StartCoroutine(FunctionName());
+	- Adding delay inbetween Loops
+	- Passing delay value in function parameters
+	
+20. Finding Game Objects and doing Advanced stuff to it
+
+	- finding game object using GameObject.Find
+	- finding game object child
+	  Using-> GameObject.Find("Cube/Cube2/Enemy");
+	- setting an game object to inactive
+	  Using-> GameObject.Find("Cube").SetActive(false);
+	  
+21. Working with Rigidboyd Wihtin C# script
+
+	- setting the default value of game object gravity
+	- changing the default Mass value
+	
+22. Working with Mesh Renderer Wihtin C# script
+	- changing the colour of game object 
+	  Using-> GetComponent<MeshRenderer>().material.color = Color.blue;
+	  
+DATE:	09-12-2021
+
+23. Accessing a C# Script form another C# Script
+	
+	- changing a script variable values from another script
+	- Accessing a game object value in a script form a script that is attached to that game object
+	  Using-> GameObject.Find("Cube").GetComponent<AnotherScript>().lives = 5;
+	- same way changing a game object Gravity value in a script form a script that is attached to that game object
+	  Using-> GameObject.Find("Cube").GetComponent<Rigidbody>().useGravity = false;
