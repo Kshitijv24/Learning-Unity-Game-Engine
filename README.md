@@ -139,3 +139,33 @@ DATE:	09-12-2021
 	  Using-> GameObject.Find("Cube").GetComponent<AnotherScript>().lives = 5;
 	- same way changing a game object Gravity value in a script form a script that is attached to that game object
 	  Using-> GameObject.Find("Cube").GetComponent<Rigidbody>().useGravity = false;
+
+DATE:	10-12-2021
+
+24. Accessing the rigidbody component of a game object from his parent game object
+
+	- changing the gravity function of a child game object form a parent game object
+	  Using-> GetComponentInChildren<Rigidbody>().useGravity = true;
+
+25. Learning Vectors in Unity in-depth
+
+	- Learning the 3 Axis of Vector3 -> X,Y and Z
+	- Printing the Position of all 3 Axis of a game object using Vector3
+	  Using-> Vector3 position;
+			void Start(){
+				position = new Vector3(1f, 2f, 3f);
+				print(position.y);
+			}
+26. Working with the Transform Component of a 3D game object
+  
+	- printing the game object default position values
+	  Using-> print(transform.position);
+	- we know that we can not change the game object position values directly
+	  for that we need to use a new Vector3 for example
+	  Using-> transform.position = new Vector3(2f, transform.position.y, transform.position.z);
+	- constantly changing the game object position
+	  Using-> void Update(){
+				  transform.position += new Vector3(2f, 0, 0);
+			  }
+	- Another way of achiving same thing
+	  Using-> transform.position += transform.up * speed * Time.deltaTime;
