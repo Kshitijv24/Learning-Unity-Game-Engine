@@ -169,3 +169,28 @@ DATE:	10-12-2021
 			  }
 	- Another way of achiving same thing
 	  Using-> transform.position += transform.up * speed * Time.deltaTime;
+
+DATE:	11-12-2021
+
+	- transform.position += transform.forward * speed * Time.deltaTime;  // this means (0,0,1);
+	- transform.position += transform.right * speed * Time.deltaTime;    // this means (1,0,0);
+	
+27. Working with transform.Translate Game Component
+
+	- moving our 3D game object using Unity built in feature called Transform
+	- transform.Translate(speed * Time.deltaTime, 0, 0);
+	
+28. Working with Rotation of 3D game object
+
+	- rotating our game object using Unity built in feature called Rotate
+	- transform.Rotate(0, speed, 0);
+
+29. Working with Scale function in Unity
+
+	- changing game object size using Unity built in feature called localScale
+	- transform.localScale += new Vector3(0, speed, 0);
+	
+	- another way of doing the same thing 
+	- transform.localScale += transform.up * speed;
+	
+	- rotating and scaling game object at the same time to test the 3D game object Physics behaviour
