@@ -198,3 +198,34 @@ DATE:	11-12-2021
 DATE:	12-12-2021
 
 BREAK
+
+DATE:	13-12-2021
+
+31. Working with Arrays
+
+	-  creating an array of game objects
+
+30. Working with Prefabs
+
+	- created a prefab of a 3D sphere game object so it can be used with the same properties 
+	  as many time as we want
+	  
+31. Working with Instantiating Game Object
+
+	- Spawning a ball game object from a cube
+	  Using-> Instantiate(ball, transform.position, Quaternion.identity); 
+	  
+	- Spawning a game object form a mouse click
+	  Using-> if (Input.GetMouseButtonDown(0)){
+				  Instantiate(ball, transform.position, Quaternion.identity);
+              }
+	
+32. Working with Random Component of Unity Engine
+	
+	- Randomly creating an array of game objects and instantiating it
+	  Using-> public GameObject[] balls;
+	  
+			  if (Input.GetMouseButtonDown(0)){
+				  int randomNumber = Random.Range(0, balls.Length);
+				  Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
+			  }
