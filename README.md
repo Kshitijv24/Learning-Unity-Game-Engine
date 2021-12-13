@@ -251,3 +251,18 @@ DATE:	13-12-2021
 		int randomNumber = Random.Range(0, balls.Length);
 		Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
 	  }
+
+	- Creating a Random Ball Genrator function to handle all our random gen tasks
+	
+	- Calling random ball function repeatedly using InvokeRepeating
+ 	
+	public GameObject[] balls;
+	
+	void RandomBallGen(){
+        int randomNumber = Random.Range(0, balls.Length);
+        Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
+        }
+	
+	void Start(){
+        InvokeRepeating("RandomBallGen", 1f, 1f);
+        }
