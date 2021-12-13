@@ -85,12 +85,17 @@ DATE:	06-12-2021
 17. Working with Tags
 	
 	- Search and Find any one GameObject with tag
-	  Using-> GameObject cube = GameObject.FindWithTag("Cube");
+	  Using-> 
+	  GameObject cube = GameObject.FindWithTag("Cube");
+	  
 	- Search and Destroy all game objects with the same tag with the help of Arrays
-	  Using-> GameObject[] cubes;
-			cubes = GameObject.FindGameObjectsWithTag("Cube");
+	  Using-> 
+	  GameObject[] cubes;
+	  cubes = GameObject.FindGameObjectsWithTag("Cube");
+	  
 	- Destroy an game object with the tag "Cube" with mouse click
-	  Using-> void OnMouseDown() function
+	  Using-> 
+	  void OnMouseDown() function
 	  
 DATE:	07-12-2021
 
@@ -101,7 +106,8 @@ DATE:	08-12-2021
 18. Adding Delay Using Invoke Function
 
 	- Destroy all game objects after a delay using Invoke Function
-	  Using-> Invoke("DestroyAll", 2f);
+	  Using-> 
+	  Invoke("DestroyAll", 2f);
 	  
 19. Adding Delay Using Coroutine
 	
@@ -109,7 +115,8 @@ DATE:	08-12-2021
 	     yield return new WaitForSeconds(2);
 	  }
 	- call in the start function
-	Using-> StartCoroutine(FunctionName());
+	Using-> 
+	StartCoroutine(FunctionName());
 	- Adding delay inbetween Loops
 	- Passing delay value in function parameters
 	
@@ -117,9 +124,11 @@ DATE:	08-12-2021
 
 	- finding game object using GameObject.Find
 	- finding game object child
-	  Using-> GameObject.Find("Cube/Cube2/Enemy");
+	  Using-> 
+	  GameObject.Find("Cube/Cube2/Enemy");
 	- setting an game object to inactive
-	  Using-> GameObject.Find("Cube").SetActive(false);
+	  Using-> 
+	  GameObject.Find("Cube").SetActive(false);
 	  
 21. Working with Rigidboyd Wihtin C# script
 
@@ -128,7 +137,8 @@ DATE:	08-12-2021
 	
 22. Working with Mesh Renderer Wihtin C# script
 	- changing the colour of game object 
-	  Using-> GetComponent<MeshRenderer>().material.color = Color.blue;
+	  Using-> 
+	  GetComponent<MeshRenderer>().material.color = Color.blue;
 	  
 DATE:	09-12-2021
 
@@ -136,39 +146,48 @@ DATE:	09-12-2021
 	
 	- changing a script variable values from another script
 	- Accessing a game object value in a script form a script that is attached to that game object
-	  Using-> GameObject.Find("Cube").GetComponent<AnotherScript>().lives = 5;
+	  Using-> 
+	  GameObject.Find("Cube").GetComponent<AnotherScript>().lives = 5;
 	- same way changing a game object Gravity value in a script form a script that is attached to that game object
-	  Using-> GameObject.Find("Cube").GetComponent<Rigidbody>().useGravity = false;
+	  Using-> 
+	  GameObject.Find("Cube").GetComponent<Rigidbody>().useGravity = false;
 
 DATE:	10-12-2021
 
 24. Accessing the rigidbody component of a game object from his parent game object
 
 	- changing the gravity function of a child game object form a parent game object
-	  Using-> GetComponentInChildren<Rigidbody>().useGravity = true;
+	  Using-> 
+	  GetComponentInChildren<Rigidbody>().useGravity = true;
 
 25. Learning Vectors in Unity in-depth
 
 	- Learning the 3 Axis of Vector3 -> X,Y and Z
 	- Printing the Position of all 3 Axis of a game object using Vector3
-	  Using-> Vector3 position;
-			void Start(){
-				position = new Vector3(1f, 2f, 3f);
-				print(position.y);
-			}
+	  Using-> 
+	  
+	Vector3 position;
+	void Start(){
+		position = new Vector3(1f, 2f, 3f);
+		print(position.y);
+	}
 26. Working with the Transform Component of a 3D game object
   
 	- printing the game object default position values
-	  Using-> print(transform.position);
+	  Using-> 
+	  print(transform.position);
 	- we know that we can not change the game object position values directly
 	  for that we need to use a new Vector3 for example
-	  Using-> transform.position = new Vector3(2f, transform.position.y, transform.position.z);
+	  Using-> 
+	  transform.position = new Vector3(2f, transform.position.y, transform.position.z);
 	- constantly changing the game object position
-	  Using-> void Update(){
-				  transform.position += new Vector3(2f, 0, 0);
-			  }
+	  Using-> 
+	  void Update(){
+		transform.position += new Vector3(2f, 0, 0);
+	  }
 	- Another way of achiving same thing
-	  Using-> transform.position += transform.up * speed * Time.deltaTime;
+	  Using-> 
+	  transform.position += transform.up * speed * Time.deltaTime;
 
 DATE:	11-12-2021
 
@@ -213,19 +232,22 @@ DATE:	13-12-2021
 31. Working with Instantiating Game Object
 
 	- Spawning a ball game object from a cube
-	  Using-> Instantiate(ball, transform.position, Quaternion.identity); 
+	  Using-> 
+	  Instantiate(ball, transform.position, Quaternion.identity); 
 	  
 	- Spawning a game object form a mouse click
-	  Using-> if (Input.GetMouseButtonDown(0)){
-				  Instantiate(ball, transform.position, Quaternion.identity);
-              }
+	  Using-> 
+	  if (Input.GetMouseButtonDown(0)){
+	      Instantiate(ball, transform.position, Quaternion.identity);
+          }
 	
 32. Working with Random Component of Unity Engine
 	
 	- Randomly creating an array of game objects and instantiating it
-	  Using-> public GameObject[] balls;
+	  Using-> 
+	  public GameObject[] balls;
 	  
-			  if (Input.GetMouseButtonDown(0)){
-				  int randomNumber = Random.Range(0, balls.Length);
-				  Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
-			  }
+	  if (Input.GetMouseButtonDown(0)){
+		int randomNumber = Random.Range(0, balls.Length);
+		Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
+	  }
