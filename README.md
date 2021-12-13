@@ -256,13 +256,13 @@ DATE:	13-12-2021
 	
 	- Calling random ball function repeatedly using InvokeRepeating
  	
-	public GameObject[] balls;
+	- public GameObject[] balls;
 	
-	void RandomBallGen(){
-        int randomNumber = Random.Range(0, balls.Length);
-        Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
-        }
+	- void RandomBallGen(){
+          int randomNumber = Random.Range(0, balls.Length);
+          Instantiate(balls[randomNumber], transform.position, Quaternion.identity);
+          }
 	
-	void Start(){
-        InvokeRepeating("RandomBallGen", 1f, 1f);
-        }
+	- void Start(){
+          InvokeRepeating("RandomBallGen", 1f, 1f);
+          }
