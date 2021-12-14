@@ -292,4 +292,4 @@ DATE:	14-12-2021
             GetComponent<Renderer>().material.color = Color.red;
       }
 
-	- creating multiple game object and managing them from unity gane engine interface using Arrays
+	- creating multiple game object and managing them from unity game engine interface using Arrays
