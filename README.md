@@ -266,3 +266,30 @@ DATE:	13-12-2021
 	- void Start(){
           InvokeRepeating("RandomBallGen", 1f, 1f);
           }
+
+DATE:	14-12-2021
+
+	- Stopping the InvokeRepeating function by
+	  Using-> CancelInvoke("RandomBallGen");
+	  after the left mouse click
+	  
+33. All the ways of getting inputs in unity
+
+	- changing the colour of a game object to yellow while our space key is down and when we realise it change it to green
+	  by using-> 
+	    if (Input.GetKeyDown(KeyCode.Space)){
+            GetComponent<Renderer>().material.color = Color.green;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space)){
+            GetComponent<Renderer>().material.color = Color.yellow;
+        }
+
+	- using different function to get the input using Unity Input Manager
+	  by using->
+	  
+	  if (Input.GetButtonDown("Jump")){
+            GetComponent<Renderer>().material.color = Color.red;
+      }
+
+	- creating multiple game object and managing them from unity gane engine interface using Arrays
