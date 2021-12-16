@@ -293,3 +293,30 @@ DATE:	14-12-2021
       }
 
 	- creating multiple game object and managing them from unity game engine interface using Arrays
+
+DATE:	15-12-2021
+
+	- Working with input.getAxis in unity to get the more smooth movement rather than using 
+	  anyother form of input because it gives us movement values in float variable not in int
+	  so it can go in decimal values
+	  
+	- testing it in Horizontal and Vertical built-in unity function
+	
+	 float xInput = Input.GetAxis("Horizontal");
+	 
+	 float yInput = Input.GetAxis("Vertical");
+	 
+	- if we don't press any key than the value of xInput will be 0 in Idle
+	  and when we press left arrow key on keyboard than the value of xInput will slowley increase to -1
+	  
+	- -1 is the minimum value of left horizontal input 
+	
+	- same when we press right arrow key on keyboard than the value of xInput will slowley increase to +1
+	
+	- +1 is the maximum value of right horizontal input
+	
+	- If we print the xInput we can clearly see the value of them changing in float value from 0 to 0.1,0.5,0.9 to 1
+	  when we press right arrow key Which is the maximum value of horizontal input
+
+	- Same as when we press left arrow key we can see the value of xInput changing from 0 to -0.1,-0.5,-0.9 to -1
+	  Which is the minimum value of horizontal input
