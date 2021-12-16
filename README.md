@@ -320,3 +320,30 @@ DATE:	15-12-2021
 
 	- Same as when we press left arrow key we can see the value of xInput changing from 0 to -0.1,-0.5,-0.9 to -1
 	  Which is the minimum value of horizontal input
+
+DATE:	16-12-2021
+
+34. Working with Time.deltaTime
+
+	- we know that the update function called every second so if we write our player movement code simply
+	  in update function that because update function runs every second than all the computers gonna have 
+	  different speed because of FPS
+	  
+	- to fix this issue we gonna use Time.deltaTime in update function to make our player movement
+	  FPS independent and make it update in real seconds 
+	  
+	  using-> 
+	  
+	- float xInput = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+    	- float yInput = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+
+    	- transform.Translate(xInput, yInput, 0);
+	
+	- input.GetAxisRaw is another way of taking input from the player but there is slight differance in this one
+	  this function takes input in integer value raher than float values so the player movement is not that smooth
+	  compared to input.GetAxis
+	
+	- float xInput = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+    	- float yInput = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+
+    	- transform.Translate(xInput, yInput, 0);
