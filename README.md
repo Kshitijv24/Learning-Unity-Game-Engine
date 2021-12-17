@@ -347,3 +347,55 @@ DATE:	16-12-2021
     	- float yInput = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
     	- transform.Translate(xInput, yInput, 0);
+
+DATE:	17-12-2021
+	
+35. Using Unity built-in input system to get input form mouse
+
+	- we have a input function in unity called "Fire1" that we can use to get input form our left mouse click
+	
+	Using->
+	
+	- if (Input.GetButtonDown("Fire1")){
+          print("left click");
+      }
+	  
+	- here "Fire1" refers to as left mouse click
+	
+36. Creating a Player Controller with Jump Functionality
+
+	public class PlayerController : MonoBehaviour
+{
+    public float speed;
+    public float jumpForse;
+
+    Rigidbody rb;
+    float xInput, yInput;
+    bool jump = false;
+
+    private void Awake(){
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update(){
+        xInput = Input.GetAxis("Horizontal") * speed;
+        yInput = Input.GetAxis("Vertical") * speed;
+
+        if (Input.GetKeyDown(KeyCode.Space)){
+            jump = true;
+        }
+    }
+
+    private void FixedUpdate(){
+        rb.velocity = new Vector3(xInput, rb.velocity.y, yInput);
+
+        if(jump == true){
+            Jump();
+            jump = false;
+        }
+    }
+
+    void Jump(){
+        rb.AddForce(0, jumpForse, 0);
+    }
+}
