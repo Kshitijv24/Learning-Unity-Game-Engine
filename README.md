@@ -399,3 +399,66 @@ DATE:	17-12-2021
         rb.AddForce(0, jumpForse, 0);
     }
 }
+
+DATE:	18-12-2021
+
+37. Complete Player Movement with Jump and Shooting Machanics
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed;
+    public float jumpForse;
+
+    public float bulletSpeed;
+    bool shoot = false;
+    public GameObject bullet;
+    public Transform bulletPos;
+
+    Rigidbody rb;
+    float xInput, yInput;
+    bool jump = false;
+
+    private void Awake(){
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update(){
+        xInput = Input.GetAxis("Horizontal") * speed;
+        yInput = Input.GetAxis("Vertical") * speed;
+
+        if (Input.GetKeyDown(KeyCode.Space)){
+            jump = true;
+        }
+
+        if (Input.GetMouseButtonDown(0)){
+            shoot = true;
+        }
+    }
+
+    private void FixedUpdate(){
+        rb.velocity = new Vector3(xInput, rb.velocity.y, yInput);
+
+        if(jump == true){
+            Jump();
+            jump = false;
+        }
+
+        if(shoot == true){
+            Shoot();
+            shoot = false;
+        }
+    }
+
+    void Jump(){
+        rb.AddForce(0, jumpForse, 0);
+    }
+
+    void Shoot(){
+        GameObject bulletSpawn = Instantiate(bullet, bulletPos.position, bullet.transform.rotation);
+        bulletSpawn.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, bulletSpeed);
+    }
+}
