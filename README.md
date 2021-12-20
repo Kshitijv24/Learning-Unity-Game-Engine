@@ -462,3 +462,35 @@ public class PlayerController : MonoBehaviour
         bulletSpawn.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, bulletSpeed);
     }
 }
+
+DATE:	19-12-2021
+
+	- added enemys and gravity to the bullets in the prototype demo
+	
+	- created a C# Script called "DestroyObject" and added it to the bullet prefab
+	  so the enemys will destory after colliding with the bullet
+	  
+	private void OnCollisionEnter(Collision collision){
+        if(collision.gameObject.tag == "Enemy"){
+            Destroy(collision.gameObject);
+        }
+    }
+	
+38. Working with Triggers in Unity
+
+	- created a 3D cube game object called "Color Changer" and created a script for it called "ColorChangerScript"
+	
+	- and made it so when ever our player game object enter the Color Changer cube than our player changes color to yellow
+	
+	- and when it exits it changes our player color to green
+	
+	public class ColorChangerScript : MonoBehaviour
+{
+    private void OnTriggerEnter(Collider col){
+        col.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+    }
+
+    private void OnTriggerExit(Collider col){
+        col.gameObject.GetComponent<Renderer>().material.color = Color.green;
+    }
+}
