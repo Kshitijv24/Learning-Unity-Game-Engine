@@ -498,3 +498,48 @@ DATE:	19-12-2021
 DATE:	20-12-2021
 
 BREAK
+
+DATE:	21-12-2021
+
+39. Working with the LookAt Unity game engine Function in-depth
+
+	- we created an cube 3D game object and a sphere 3D game object
+	
+	- attached a C# script called "LookAtTheObject" to the cube
+	
+	- using this script our cube gonna follow the sphere movement where it goes
+	
+	- void Update(){
+        transform.LookAt(target.transform);    
+    }
+	
+	- working with the local and global interface of UnityEngine
+	
+	- restrict the cube from follow y axis of sphere
+	
+	- using->
+	
+	void Update(){
+        Vector3 newPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+        transform.LookAt(newPos);
+    }
+	
+40. Working with the UnityEngine.SceneManagement in-depth
+
+	- creating two different scenes and changing from one scene to another by pressing left mouse click
+	
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class LevelLoaderScript : MonoBehaviour
+{
+    void Update(){
+        if (Input.GetMouseButtonDown(0)){
+            LoadLevel();
+        }       
+    }
+
+    void LoadLevel(){
+        SceneManager.LoadScene("Level2");
+    }
+}
