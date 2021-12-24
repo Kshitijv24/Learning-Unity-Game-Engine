@@ -543,3 +543,36 @@ public class LevelLoaderScript : MonoBehaviour
         SceneManager.LoadScene("Level2");
     }
 }
+
+DATE:	22-12-2021	
+
+	- changing Scenes by using Build Index
+	
+	using->
+	
+	- SceneManager.LoadScene(1);
+	
+	- changing Scenes from next level to previous level by attaching the same C# Script to both level game object
+	  and by using public build index number that we can change form the unity interface
+	
+	- Reloading a level from C# Script
+	
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class LevelLoaderScript : MonoBehaviour
+{
+    void Start(){
+        print("level Loaded ");    
+    }
+
+    void Update(){
+        if (Input.GetMouseButtonDown(0)){
+            ReloadLevel();
+        }       
+    }
+
+    void ReloadLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+}
