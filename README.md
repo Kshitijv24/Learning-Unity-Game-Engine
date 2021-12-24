@@ -576,3 +576,86 @@ public class LevelLoaderScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
+
+DATE:	23-12-2021
+
+41. Understanding the OOPS Concepts in Unity Game Engine in-depth
+
+	- Creating a C# Script called "CarScript" but removing the MonoBehaviour inharitance form it 
+	  and not attaching to it any game object to create a Structure for other Script to use from it
+	  
+	- Creating an another C# Script and using all the properties of that script by creating an instense of that class which is a Object
+	
+	- creating two different dummy car modles from "CarScript" class using objects and giving them different properties and printing it
+	  to the console to see the differance
+	  
+	- Creating a Constructer insted of using default constructer 
+	
+	- Constructer Overloading
+	
+	- creating multiple constructer to use constructer overloading
+	  
+
+	 public class CarScript {
+    
+    public float speed;
+    public string color;
+    public int highestSpeed;
+    
+    public CarScript(){
+        Debug.Log("CarScript() is called");
+    }
+
+    public CarScript(float speed){
+        Debug.Log("CarScript(float speed) is called");
+    }
+
+    public CarScript(float speed, string color){
+        Debug.Log("CarScript(float speed, string color) is called");
+    }
+
+    public void Move(){
+        Debug.Log("Moving");
+    }
+
+    public void ApplyBreak(){
+        Debug.Log("Applying Break");
+    }
+
+    public void carSpeed(){
+        Debug.Log(speed);
+    }
+}
+
+
+
+public class CubeScript : MonoBehaviour
+{
+    void Start(){
+        CarScript myCar = new CarScript();
+        myCar.speed = 10.5f;
+        myCar.color = "red";
+        myCar.highestSpeed = 20;
+
+        CarScript otherCar = new CarScript();
+        otherCar.speed = 14.5f;
+        otherCar.color = "blue";
+        otherCar.highestSpeed = 50;
+
+        CarScript myNewCar = new CarScript(5f);
+        CarScript myOldCar = new CarScript(10f, "red");
+
+        myCar.carSpeed();
+        myCar.Move();
+        myCar.ApplyBreak();
+        Debug.Log(myCar.color);
+        Debug.Log(myCar.highestSpeed);
+
+
+        otherCar.carSpeed();
+        otherCar.Move();
+        otherCar.ApplyBreak();
+        Debug.Log(otherCar.color);
+        Debug.Log(otherCar.highestSpeed);
+    }
+}
