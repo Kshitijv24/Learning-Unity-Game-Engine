@@ -659,3 +659,38 @@ public class CubeScript : MonoBehaviour
         Debug.Log(otherCar.highestSpeed);
     }
 }
+
+DATE:	24-12-2021
+
+42. Understanding what this keyword means
+
+	public float speed;
+    	public string color;
+	
+	public CarScript(float speed, string color){
+        this.speed = speed;
+        this.color = color;
+        Debug.Log("CarScript(float speed, string color) is called");
+    }
+	
+43. Using System.Serializable To Initialize Objects
+
+	[System.Serializable]
+	public class CarScript {
+    
+    	public float speed;
+    	public string color;
+    	public int highestSpeed;
+	
+	public void PrintCarDetails(){
+        Debug.Log("Speed = " + speed);
+        Debug.Log("Color = " + color);
+        Debug.Log("Highest Speed = " + highestSpeed);
+    }
+}
+
+	public CarScript carScript;
+	
+	void Start(){
+	carScript.PrintCarDetails();
+}
