@@ -694,3 +694,107 @@ DATE:	24-12-2021
 	void Start(){
 	carScript.PrintCarDetails();
 }
+
+DATE:	25-12-2021
+
+44. Working with Properties in C# Script in UnityEngine
+
+	- Creating Properties Script
+
+public class Score
+{
+    private int point;
+
+    public int Point{
+        get{
+            return point;
+        }
+        
+        set{
+            if(value > 5 && value < 10)
+            point = value;
+        }
+    }
+} 
+
+	- Using Properties within a Script
+
+public class Player : MonoBehaviour
+{
+    private void Start(){
+        Score score = new Score();
+        score.Point = 5;
+        print(score.Point);
+
+        score.Point = 9;
+        print(score.Point);
+    }
+}
+
+	- Calling a Function from within Properties
+	
+	- Creating Properties Script
+	
+public class Score
+{
+    private int point;
+
+    public int Point{
+        get{
+            return point;
+        }
+        
+        set{
+            if(value > 5 && value < 10){
+                point = value;
+            }
+            PrintFunction();
+        }
+    }
+
+    void PrintFunction(){
+        Debug.Log(point);
+    }
+}
+
+	- Using Properties within a Script
+
+public class Player : MonoBehaviour
+{
+    private void Start(){
+        Score score = new Score();
+        score.Point = 5;
+        score.Point = 9;
+    }
+}
+
+	- Auto Properties
+	
+	- Creating Auto Properties Script
+	
+public class Score
+{
+    private int lives;
+
+    public int Lives { get; set; }
+}
+
+	- Using Auto Properties within a Script
+	
+public class Player : MonoBehaviour
+{
+    private void Start(){
+        Score score = new Score();
+        score.Lives = 6;
+        print(score.Lives);
+    }
+}
+
+	- Making Properties Read Only
+	
+public class Score
+{
+    private int lives;
+
+    public int Lives { get; }
+}
