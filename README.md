@@ -798,3 +798,91 @@ public class Score
 
     public int Lives { get; }
 }
+
+DATE:	26-12-2021
+
+45. Understanding enums in Unity C# Scripting
+
+	- creating enum type
+	
+	enum GameState { Ready, Playing, Pause, GameOver };
+	
+	- creating enum variable
+	
+	GameState state;
+	
+	- using enums
+	
+	public class EnumsScript : MonoBehaviour{
+
+    enum GameState { Ready, Playing, Pause, GameOver };
+
+    GameState state;
+
+    void Start(){
+        state = GameState.Ready;    
+    }
+
+    void Update(){
+        switch (state){
+            case GameState.Ready:
+                print("You are ready");
+                break;
+            case GameState.Playing:
+                print("You are plying");
+                break;
+            case GameState.Pause:
+                print("game is paused");
+                break;
+            case GameState.GameOver:
+                print("game over");
+                break;
+        }
+    }
+}
+
+	- Making enums Public so we can access it form unity interface
+	
+	public enum GameState { Ready, Playing, Pause, GameOver };
+
+    public GameState state;
+	
+	- insted of printing our own string now we are gonna print GameState itself
+	
+	switch (state)
+        {
+            case GameState.Ready:
+                print(GameState.Ready);
+                break;
+            case GameState.Playing:
+                print(GameState.Playing);
+                break;
+            case GameState.Pause:
+                print(GameState.Pause);
+                break;
+            case GameState.GameOver:
+                print(GameState.GameOver);
+                break;
+        }
+		
+	- type casting the enums to print it's internal values
+	
+	switch (state)
+        {
+            case GameState.Ready:
+                print((int)GameState.Ready);
+                break;
+            case GameState.Playing:
+                print((int)GameState.Playing);
+                break;
+            case GameState.Pause:
+                print((int)GameState.Pause);
+                break;
+            case GameState.GameOver:
+                print((int)GameState.GameOver);
+                break;
+        }
+		
+	- changing enums internal values
+	
+	public enum GameState { Ready=2, Playing=1, Pause=6, GameOver=5 };
