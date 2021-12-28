@@ -886,3 +886,59 @@ DATE:	26-12-2021
 	- changing enums internal values
 	
 	public enum GameState { Ready=2, Playing=1, Pause=6, GameOver=5 };
+
+DATE:	27-12-2021
+
+46. Understanding Inheritance in Unity C# Scripting
+
+	- understanding what "is a relation" is
+	
+	- creating a C# script called "Inheritance" where we are gonna create all the classes objects
+	
+	- creating a C# script called "Enemy" Where we are gonna make a function called Attack which all other inharited classes gonna use
+	
+	- creating a C# script called "Dragon" which is gonna inharit from the Enemy class
+	
+	- creating a C# script called "Robot" which is gonna inharit from the Enemy class
+	
+	- Enemy C# Script
+	
+public class Enemy{
+
+    public void Attack(){
+        Debug.Log("Enemy Attack");
+    }
+}
+
+	- Inheritance C# Script
+	
+	- using Attack function from the Enemy class in Inheritance class by creating a new object of Enemy class
+	
+public class Inheritance : MonoBehaviour{
+
+    void Start(){
+
+        Enemy enemy = new Enemy();
+        enemy.Attack();
+
+    }
+}
+
+	- Dragon C# Script
+	
+public class Dragon : Enemy{
+
+}
+
+	- calling Attack function of Enemy class by creating a new object of Dragon class
+	  because Dragon class inharit from Enemy class so it has all the properties of Enemy class
+	  
+public class Inheritance : MonoBehaviour{
+    
+	void Start(){
+
+        Dragon dragon = new Dragon();
+        dragon.Attack();
+
+    }
+}
