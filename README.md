@@ -942,3 +942,87 @@ public class Inheritance : MonoBehaviour{
 
     }
 }
+
+DATE:	28-12-2021
+
+	- Inheriting our Enemy Script from MonoBehaviour
+
+	- because now Enemy is inheriting from MonoBehaviour then all the classes that inherit from Enemy are also have properties of
+
+	 MonoBehaviour
+
+	- we also know that if a script does not inherit from MonoBehaviour then it can not be added to a script
+
+	- but in this case, because Enemy is inheriting from MonoBehaviour and the Dragon Script inherit from Enemy Script
+
+	 so Dragon Script also has the properties of MonoBehaviour so it can be added to any game object even if it does not
+
+	 directly inherit from MonoBehaviour
+
+	- calling Attack function of Enemy class from Dragon class Script
+
+	- Enemy C# Script
+
+public class Enemy : MonoBehaviour{
+
+    public void Attack(){
+
+    Debug.Log("Enemy Attack");
+
+    GetComponent<Renderer>().material.color = Color.red;
+  }
+}
+
+	- Dragon C# Script
+
+public class Dragon : Enemy{
+
+  public bool attacking = false;
+  private void Update(){
+    if(attacking){
+      Attack();
+    }
+  }
+}
+
+	- Creating same name Function in Dragon class that is in Enemy class to see which one is getting called
+
+	- Dragon C# Script
+	
+public class Dragon : Enemy{
+	
+  public bool attacking = false;
+
+  private void Update(){
+	if(attacking){
+    Attack();
+   }
+  }
+
+  void Attack(){
+    Debug.Log("Dragon Attack");
+  }
+}
+
+	- the Attack function of child class is called which is Dragon and not the parent which is Enemy
+	 because the child class will hide the parent class same name function in this case which is a function named "Attack"
+
+	- now if we want to access the same name function of parent class rather than child class then we need to call it by 
+	Using-> base keyword
+
+	for example - Dragon C# Script
+	
+public class Dragon : Enemy{
+  public bool attacking = false;
+  private void Update(){
+    if(attacking){
+      base.Attack();
+    }
+  }
+  
+  void Attack(){
+    Debug.Log("Dragon Attack");
+  }
+}
+
+	- using base keyword before function we can call the base/parent class function
