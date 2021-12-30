@@ -1026,3 +1026,89 @@ public class Dragon : Enemy{
 }
 
 	- using base keyword before function we can call the base/parent class function
+
+DATE:	29-12-2021
+
+
+
+47. Working with Protected Access Modifiers
+
+
+
+	- we already know that a public access modifier make every function and variable of a class to be accessible by anyone
+
+	 that is inheriting from it and even those classes that are not inheriting from it can access that public variable by
+
+	 creating a new object of that class
+
+	  
+
+	- and a private access modifier makes it not accessible by anyone so what if we need something in between 
+
+	  
+
+	- for example what if we need a variable or a function from a class only accessible by its children and not by any other class
+
+	 that is not inheriting from that parent then we can use an access modifier called Protected
+
+	  
+
+	- so by using the Protected keyword we can be sure that a variable or a function can only be accessible by its child class and
+
+	 not by any other class even after making a new object of that class
+
+	  
+
+	- Enemy C# Script by using Protected access modifier
+
+	
+
+	public class Enemy : MonoBehaviour{
+
+
+
+  protected void Attack(){
+
+    Debug.Log("Enemy Attack");
+
+    GetComponent<Renderer>().material.color = Color.red;
+
+  }
+
+}
+
+
+
+	- now only those classes that inherit from the Enemy class will be able to use it and not any other class like previously
+
+	 we created a class called Inheritance so that class now can not use an Enemy class function or variable
+
+	  
+
+	- on the other hand, the Dragon class which is inherited from the Enemy class can still access its properties
+
+	
+
+	- Dragon C# Script
+
+	
+
+	public class Dragon : Enemy{
+
+
+
+  public bool attacking = false;
+
+
+
+  private void Update(){
+
+    if(attacking){
+
+      Attack();
+
+    }
+
+  }
+
+}
