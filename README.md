@@ -1112,3 +1112,57 @@ DATE:	29-12-2021
   }
 
 }
+
+DATE:	30-12-2021
+
+48. Understanding Polymorphism Virtual Functions & Overriding in Unity C#
+
+	- Creating three different classes named
+		- Dragon which inherit from the MonoBehaviour
+		- BlueDragon which inherit from the Dragon class
+		- RedDragon which also inherit from the Dragon class
+		
+	- Creating the same name function "Attack" in all three classes than make the parent class Dragon "Attack" function virtual 
+	  so we can use override function in all the child classes
+	  
+	-  and making all the child classes BlueDragon,RedDragon "Attack" function override so we can call the child function form the 
+	   parent class because without making the main function virtual and child classes function override we can not call child classes
+	   functions from the parent class
+	   
+	- creating a new referance of a Dragon class and than storing a new instense of BlueDragon class
+	  so this way we can call child class function from the parent class
+	  
+	- Dragon C# script -> all the classes are in this single script -> Dragon,BlueDragon,RedDragon
+	
+public class Dragon : MonoBehaviour{
+
+    private void Start(){
+        Dragon dragon = new Dragon();
+        dragon.Attack();
+
+        Dragon dragon2 = new BlueDragon();
+        dragon2.Attack();
+		
+		Dragon dragon3 = new RedDragon();
+        dragon3.Attack();
+    }
+
+    public virtual void Attack(){
+        print("Dragon Attack");
+    }
+} // End of Dragon Class
+
+public class BlueDragon : Dragon{
+
+    public override void Attack(){
+        print("Blue Dragon Attack");
+    }
+}
+
+public class RedDragon : Dragon{
+
+    public override void Attack()
+    {
+        print("Red Dragon Attack");
+    }
+}
