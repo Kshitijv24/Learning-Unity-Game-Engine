@@ -1166,3 +1166,83 @@ public class RedDragon : Dragon{
         print("Red Dragon Attack");
     }
 }
+
+DATE:	31-12-2021
+
+49. Understanding Static Variables, Functions & Classes in Unity C# Scripting
+
+	- we know already that we can access one class variable from the other class by making a new object in that class
+	 and then we can access that variable or function and change it accordingly 
+		    
+	- for example
+
+public class StaticTest : MonoBehaviour{
+  void Start(){
+
+    Bullets bullet1 = new Bullets();
+    Bullets.noOfbullets = 10;
+
+    Bullets bullet2 = new Bullets();
+    Bullets.noOfbullets = 20;
+
+    print(Bullets.noOfbullets);
+    print(Bullets.noOfbullets);
+  }
+}
+		    
+public class Bullets{
+  public static int noOfbullets;
+}
+
+	- so by using the above method we can change one class variable from another class by making a new object
+	 but every new object gonna have there own version of that variable
+
+	- by creating a Static Variable we can be sure that every new object of that class is gonna have the same instance or version
+	 of that variable
+
+	- one instance of that class is gonna be shared in all the objects
+		    
+	- for example
+
+public class StaticTest : MonoBehaviour
+{
+  void Start(){
+    Bullets bullet1 = new Bullets();
+    Bullets.noOfbullets = 10;
+		    
+    Bullets bullet2 = new Bullets();
+    Bullets.noOfbullets = 20;
+		    
+    print(Bullets.noOfbullets);
+  }
+}
+
+public class Bullets{
+  public static int noOfbullets;
+}
+	- static variables can be used to check how many instances are created of that class
+
+	- for example
+
+public class StaticTest : MonoBehaviour{
+
+  void Start(){
+    Bullets bullet1 = new Bullets();
+    Bullets bullet2 = new Bullets();
+    print(Bullets.noOfbullets);
+  }
+}
+		    
+public class Bullets{
+  public static int noOfbullets;
+  public Bullets(){
+    noOfbullets++;
+  }
+}
+	- here we created a constructor so we can increment the no of times when an instance of that class is created
+	 because we know that constructor is called automatically whenever an intense of a class is created
+
+	- one important thing to remember is that whenever we create a static variable that variable will always be in the memory
+	 and never get cleared automatically it will only clear after our program is closed
+		    
+	- because whenever we create a static variable it will always reserve some memory for that variable
