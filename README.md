@@ -1246,3 +1246,99 @@ public class Bullets{
 	 and never get cleared automatically it will only clear after our program is closed
 		    
 	- because whenever we create a static variable it will always reserve some memory for that variable
+
+		    
+DATE:	01-01-2022
+
+Break
+
+DATE:	02-01-2022
+
+	- Static Functions
+	
+public class StaticTest : MonoBehaviour
+{
+    void Start(){
+
+        Bullets bullet1 = new Bullets();
+        
+        Bullets bullet2 = new Bullets();
+
+        Bullets.ShowBullets();
+    }
+}
+
+public class Bullets{
+
+    public static int noOfbullets;
+
+    public Bullets(){
+        noOfbullets++;
+    }
+
+    public static void ShowBullets(){
+        Debug.Log("No of Bullets " + noOfbullets);
+    }
+}
+
+	- note an static function can not call an non-static variable
+	
+	- note when ever we create class static than we can not create an instense of that class
+	  and also we can not create a constructor in static class
+	  
+	  
+50. Understanding Method Overloading in Unity C# Scripting
+
+	- as we know that we can not create same name function twice in same class, we have to name them slightly differently
+	  something like this
+	  
+public class Fun{
+    public void printInt(int i){
+        Debug.Log(i);
+    }
+
+    public void printfloat(float i)
+    {
+        Debug.Log(i);
+    }
+
+    public void printString(string i)
+    {
+        Debug.Log(i);
+    }
+}
+
+	- To slove that problem we can use Method Overloading with this we can create same name functions with just different perameters
+	  
+	- for example
+	
+public class MethodOverloading : MonoBehaviour
+{
+    void Start(){
+        Fun fun = new Fun();
+
+        fun.Print(2);
+        fun.Print(1.2f);
+        fun.Print("this is a String");
+    }
+}
+
+public class Fun{
+
+    public void Print(int i){
+        Debug.Log("Print(int i) is getting called");
+        Debug.Log(i);
+    }
+
+    public void Print(float i){
+        Debug.Log("Print(float i) is getting called");
+        Debug.Log(i);
+    }
+
+    public void Print(string i){
+        Debug.Log("Print(string i) is getting called");
+        Debug.Log(i);
+    }
+}
+	
+	- this way we can keep the same name for all the functions and can still call different functions by just changing the parameters
