@@ -1342,3 +1342,99 @@ public class Fun{
 }
 	
 	- this way we can keep the same name for all the functions and can still call different functions by just changing the parameters
+
+DATE:	03-01-2022
+	
+	- we can even call the function with the same name and same data type without any error buy just changing the number of parameters
+	
+	for example
+	
+	 public void Print(int i, int j){
+        Debug.Log("Print(int i, int j) is getting called");
+        Debug.Log(i);
+        Debug.Log(j);
+    }
+	
+	- and we can call this function by this
+	
+	fun.Print(2, 3);
+	
+51. Understanding NameSpaces in Unity C# Scripting
+
+	- by using namespaces we can use others prewritten code without writing them form scratch by ourself
+	
+	- for example if we remove using UnityEngine form any C# script that we create in unity than all the functions
+	  that depend on UnityEngine API are not gonna work like MonoBehaviour and rigidbody
+	  
+	- we can also remove using UnityEngine from top and still keep using MonoBehaviour and rigidbody and all the functions
+      that depend on it by adding this in front of them "UnityEngine."
+	  
+	- for example
+	
+	- UnityEngine.MonoBehaviour
+	
+	- UnityEngine.Rigidbody rb;
+	
+	- Nested NameSpaces
+	
+	- another example of this is Text or UI in Unity
+	
+	- we can only use UI functions in unity if we add this at the top of the C# script "using UnityEngine.UI;"
+	  Text text;
+
+	- or we can do this "UnityEngine.UI.Text text;"
+	
+	- this way we can use nested namespaces means a namespace inside another namespace
+	
+	- Creating our own NameSpaces
+	
+	- we created an namespace C# script called "CustomNameSpaceScript"
+	
+	- in that we created an class called "Utilities"
+	
+	- inside that class we created an satatic function called "PrintHelloWorld"
+	
+	- we created it satatic so we don't have to make an instense of that class
+	
+	- we can just use it by using it's class name
+	
+	- we are using UnityEngine api so that we can call Debug.Log function
+	
+	- here is that NameSpace C# Script
+	
+using UnityEngine;
+
+namespace CustomNameSpace{
+    public class Utilities{
+        public static void PrintHelloWorld(){
+            Debug.Log("Hellow World");
+        }
+    }
+}
+
+	- now we are gonna use our custom namespace C# script in another C# script
+	
+public class NameSpaceScript : MonoBehaviour
+{
+    void Start(){
+        CustomNameSpace.Utilities.PrintHelloWorld();
+    }
+}
+
+	- like all the other namespaces we can use our namespace class like this calling the nested namespace first
+	  than the function name like
+	  
+	- CustomNameSpace.Utilities.PrintHelloWorld();
+	
+	- or we can use it like we use UnityEngine namespace
+	
+	- like this
+	
+using CustomNameSpace;
+
+public class NameSpaceScript : MonoBehaviour
+{
+    void Start(){
+        Utilities.PrintHelloWorld();
+    }
+}
