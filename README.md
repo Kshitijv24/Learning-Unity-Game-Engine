@@ -1438,3 +1438,104 @@ public class NameSpaceScript : MonoBehaviour
         Utilities.PrintHelloWorld();
     }
 }
+
+DATE:	04-01-2022
+
+	- Creating Custom Nested NameSpaces
+	
+using UnityEngine;
+
+namespace CustomNameSpace{
+    public class Utilities{
+        public static void PrintHelloWorld(){
+            Debug.Log("Hello World");
+        }
+    }
+}
+
+namespace UI{
+    public class UIWork{
+        public static void UIFunction(){
+            Debug.Log("this is a UI Function");
+        }
+    }
+}
+
+	- using this nested namespace in another C# script
+	
+using CustomNameSpace;
+
+public class NameSpaceScript : MonoBehaviour
+{
+    void Start(){
+        Utilities.PrintHelloWorld();
+        UI.UIWork.UIFunction();
+    }
+}
+
+52. Understanding Attributes in Unity C# Scripting
+
+	- Attributes are very usefull some of the use cases of Attributes are
+	
+	- if we want to make an variable private but also want it to be accessable in unity inspertor
+	
+	- we know only public variables are shown in unity inspertor but by using an Attribute property called
+	  [SerializeField] we can keep it private so this variable can not be accessed by anyother script but we still can 
+	  access it in the unity inspertor
+	  
+	- for example
+	
+	- [SerializeField]
+      private int speed;
+	  
+	- by writing this [SerializeField] we can make speed variable accessable in unity inspertor
+	
+	- another use of Attributes is
+	
+	- if we want to make an variable accessable by all the other scripts so we need to make it public
+	  but by making it public this variable is also gonna show in unity inspertor, what if we don't want it to show
+	  on inspertor but still want to keep it public 
+	  
+	- in this case we can use an Attribute called [HideInInspector]
+	
+	- for example
+	
+	- [HideInInspector]
+	  public int speed;
+	  
+	- we can also create an slider in unity inspertor by using an Attribute called [Range]
+	  in this we need to pass to parameters for the minimum and maximum values
+	
+	- for example
+	
+	- [Range(0,40)]
+      public int speed;
+	  
+53. Adding Component only using Attributes inside the C# script without using unity inspertor
+
+	- this is a really inportant feature of unity
+	
+	- we can add any component of unity to any game object only using C# Script
+	
+	- in this example we are gonna add Rigidbody Component using an Attribute called "RequireComponent"
+	
+	- for example
+	
+	- [RequireComponent(typeof(Rigidbody))]
+	
+	- now even if we previously did not add that physics component Rigidbody to the game object
+	  but because we use RequireComponent Attribute so when ever we are gonna run this game unity automaticaly
+	  gonna add it to the game object
+	  
+	- complete C# script showing the use case of RequireComponent
+	
+[RequireComponent(typeof(Rigidbody))]
+public class AttributesScript : MonoBehaviour
+{
+    Rigidbody rb;
+
+    void Start(){
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+    }
+}
