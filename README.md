@@ -1539,3 +1539,96 @@ public class AttributesScript : MonoBehaviour
         rb.isKinematic = true;
     }
 }
+
+DATE:	05-01-2022
+
+54. Understanding Coroutines in Unity C# Scripting in-depth
+
+	- by using Coroutines we can hold the execution of a perticular function and can resume it after sometimes
+	  means we can do some tasks in intervals of some seconds or minutes
+	  
+	- so in this example we are creating an C# script called "CoroutineScript" and attaching it to the cube
+
+	- and changing the cube color after 2 seconds to cyan and than agin changing the cube color after 1 second
+	  to blue using Coroutine functions
+	  
+	- Coroutine C# Script
+	
+public class CoroutinesScript : MonoBehaviour
+{
+    private GameObject cube;
+    void Start(){
+        StartCoroutine(Test());
+    }
+
+    IEnumerator Test(){
+        print("Coroutine Started");
+        yield return new WaitForSeconds(2f);
+        GetComponent<Renderer>().material.color = Color.cyan;
+
+        yield return new WaitForSeconds(1f);
+        GetComponent<Renderer>().material.color = Color.blue;
+        print("Coroutine Ends");
+    }
+}
+
+	- using Coroutines on per frame bases
+	
+	- we can halt the execution of the code unitl the current frame finish executing
+	
+	Using->
+	
+	- yield return null;
+	
+55. Understanding Coroutines per frame in-depth
+
+public class CoroutinesScript : MonoBehaviour
+{
+    void Start(){
+        Test2();
+        for (int i = 0; i < 6; i++){
+            print("Start()");
+        }
+    }
+	
+	void Test2(){
+        for(int i=0; i<6; i++){
+            print("Test2()");
+        }
+    }
+}
+
+	- in above example we can see that first all the Test2 calls is gonna complete of the loop after that
+	  anything that is written after Test2 is gonna get called in this case for loop
+	  
+	- we can fix this problem by using Coroutines 
+	
+	- by using Coroutine we can call the Test2 with parallelly anyother function that is written after that
+	  in this case that for loop
+	  
+	- here is the example of that Coroutine Function
+	
+public class CoroutinesScript : MonoBehaviour
+{
+    void Start(){
+        StartCoroutine(Test3());
+        for (int i = 0; i < 6; i++){
+            print("Start()");
+        }
+    }
+	
+	IEnumerator Test3(){
+        for (int i = 0; i < 6; i++){
+            print("Test3()");
+            yield return null;
+        }
+    }
+}
+
+	- so in this case first call of Coroutine Test3 is gonna happen and it is gonna print "Test3()"
+	
+	- and after that all the calls of function that is written after the Test3 is gonna happen
+	
+	- after all the calls of other functions happend than the Test3 Coroutine is gonna continue
+	
+	- so in this way Coroutines are really helpfull to run more than one funcion simultaneously
