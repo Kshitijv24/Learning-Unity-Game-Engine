@@ -1632,3 +1632,58 @@ public class CoroutinesScript : MonoBehaviour
 	- after all the calls of other functions happend than the Test3 Coroutine is gonna continue
 	
 	- so in this way Coroutines are really helpfull to run more than one funcion simultaneously
+	
+
+DATE: 06-01-2022
+
+56. Creating An 2D Candy Catch Game
+
+- All the Graphics Stuff
+
+- Importing all the graphics assets of the game after editing them in GIMP
+
+- Adding a Background Image to the Game and adjusting its Pixel Per Unit Property from Unity Inspector
+ to fit it perfectly on the screen
+  
+- Adding player sprite to the scene and also adjusting its Pixel Per Unit Property from Unity Inspector
+ to fit it perfectly on the screen
+  
+- Adding Candy sprite to the game and also adjusting its Pixel Per Unit Property from Unity Inspector
+ to fit it perfectly on the screen
+  
+- Separating Candy sprite form group to individual sprite by using Unity built-in feature called "Sprite Editor"
+
+- And setting its sprite mode to Multiple form single sprite
+  
+- Making Sorting layers to see our player apart from our Game Background
+
+- Give Background a sorting layer called Background
+
+- Give Player a sorting layer called MiddleGround
+
+- Give Candies a sorting layer called ForeGround
+
+- Creating an Empty GameObject where our Candies are gonna spawn from random Positions
+
+- All the Physics Stuff
+
+- Adding Circle Collider to our player and resizing it to only on its Mouth
+
+- Adding Rigidbody2D and Circle Collider2D and Box Collider2D to our Candies according to the shape of Candies
+
+- Creating an Empty GameObject and Attaching a Box Collider2D to it 
+
+- and stretching its size so it fits our Game Screen in Bottom
+
+- We need this because for those Candies that our player is unable to catch so they need to be destroyed
+
+- after they are out of the screen this is where our Box Collider2D comes in 
+
+- that will gonna know if something hit that
+
+  - then we will gonna Destroy that Candy Game Object
+
+
+- Creating Prefabs
+
+- Making all the Sprites an Prefabs so we don't have to do all the Physics Stuff again and again
