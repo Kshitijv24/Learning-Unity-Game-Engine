@@ -1687,3 +1687,49 @@ DATE: 06-01-2022
 - Creating Prefabs
 
 - Making all the Sprites an Prefabs so we don't have to do all the Physics Stuff again and again
+
+DATE:	07-01-2022
+	
+- All the C# Programming Stuff
+
+	- Creating an simple Player Movement Script without using Rigidbody2D because this is the movement we need in our
+	  game only using transform.position component
+	  
+- PlayerController C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    private bool canMove = true;
+
+    [SerializeField]
+    private float maxPos;
+
+    [SerializeField]
+    private float moveSpeed;
+    
+    private float xInput;
+
+    void Update(){
+        if (canMove){
+            Move();
+        }
+    }
+
+    void Move(){
+        xInput = Input.GetAxis("Horizontal");
+        transform.position += Vector3.right * xInput * moveSpeed * Time.deltaTime;
+
+        float xPos = Mathf.Clamp(transform.position.x, -maxPos, maxPos);
+        transform.position = new Vector3(xPos, transform.position.y, transform.position.z);
+    }
+}
+
+	- in player movement script we created movement for our Player Sprite model
+	
+	- And also we need to clamp the player position so we our player don't go our of the screen
+	
+	- to achive this functionality we used an Unity build in feature called Mathf.Clamp
