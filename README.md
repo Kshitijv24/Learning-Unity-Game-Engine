@@ -1733,3 +1733,42 @@ public class PlayerController : MonoBehaviour
 	- And also we need to clamp the player position so we our player don't go our of the screen
 	
 	- to achive this functionality we used an Unity build in feature called Mathf.Clamp
+
+DATE: 08-01-2022
+
+Break
+
+DATE: 09-01-2022
+
+- Creating An C# Script called CandyScript
+
+- in this script we are only gonna make our Candies Disappear if they Collide with our Player Game Object
+
+- or if they collide with the Boundary Box Collider2D GameObject
+ using Unity built-in funcion called "OnTriggerEnter2D"
+  
+- CandyScript C# Unity Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CandyScript : MonoBehaviour
+{
+  private void OnTriggerEnter2D(Collider2D collision){
+    if(collision.gameObject.tag == "Player"){
+      // Increment the Score
+      collision.isTrigger = true;
+      Destroy(gameObject);
+    }else if (collision.gameObject.tag == "Boundary"){
+      // Decrement the lives
+      Destroy(gameObject);
+    }
+  }
+}
+
+- we are doing all these checks what collide with what by using an unity built-in feature called Tags
+
+- we have given our player a Tag called "Player"
+
+- and our Boundary a Tag called "Boundary"
