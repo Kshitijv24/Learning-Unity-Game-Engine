@@ -1772,3 +1772,69 @@ public class CandyScript : MonoBehaviour
 - we have given our player a Tag called "Player"
 
 - and our Boundary a Tag called "Boundary"
+
+DATE: 10-01-2022
+
+- Spawning Random Candies
+
+- we are spawning random candies from 20 Candies in our game
+
+- and they all are gonna spawn from a random place
+
+- we created an separate script for this feature called "CandySpawnerScript"
+
+- CandySpawnerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CandySpawnerScript : MonoBehaviour
+{
+  [SerializeField]
+  private float maxX;
+
+  [SerializeField]
+  private float spawnIntervals;
+
+  public GameObject[] candies;
+
+  public static CandySpawnerScript instance;
+
+  private void Awake(){
+    if(instance == null){
+      instance = this;
+    }
+  }
+
+  void Start(){
+    //SpawnCandy();  
+
+    StartCoroutineCandySpawner();
+  }
+
+  void SpawnCandy(){
+    int randomCandy = Random.Range(0, candies.Length);
+    float randomNumber = Random.Range(-maxX, maxX);
+     
+    Vector3 randomPosition = new Vector3(randomNumber, transform.position.y, transform.position.z);
+    Instantiate(candies[randomCandy], randomPosition, transform.rotation);
+  }
+
+  IEnumerator CoroutineCandySpawner(){
+    yield return new WaitForSeconds(2f);
+
+    while (true){
+      SpawnCandy();
+      yield return new WaitForSeconds(spawnIntervals);
+    }
+  }
+
+  public void StartCoroutineCandySpawner(){
+    StartCoroutine(CoroutineCandySpawner());
+  }
+
+  public void StopCoroutineCandySpawner(){
+    StopCoroutine(CoroutineCandySpawner());
+  }
+}
