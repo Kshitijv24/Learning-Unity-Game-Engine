@@ -1838,3 +1838,66 @@ public class CandySpawnerScript : MonoBehaviour
     StopCoroutine(CoroutineCandySpawner());
   }
 }
+
+DATE: 11-01-2022
+
+- Working with UI of our Game
+
+- Creating a Pannel at the top and adding text and image to it
+
+- resizing all of those according to our screen Resolution
+
+- adding some lines of code in our "GameManager" Script to increment the number whenever a player catches a Candy
+  
+- "GameManager" C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour{
+
+  public static GameManager instance;
+
+  private int score = 0;
+
+  bool gameOver = false;
+
+  public Text scoreText;
+
+  private void Awake(){
+
+    instance = this;
+  }
+
+  public void IncrementScore(){
+    score++;
+    scoreText.text = score.ToString();
+    print(score);
+  }
+}
+
+- Adding Lives in our Game
+
+- Creating and Lives Counter in our Game so we can keep track of lives
+
+- "GameManager" C# Script code for Lives Counter
+
+private int lives = 3;
+
+public void DecreaseLife(){
+    if(lives > 0){
+      lives--;
+      print(lives);
+    }
+
+    if(lives <= 0){
+      gameOver = true;
+      GameOver();
+    }
+  }
+
+  public void GameOver(){
+    print("Game Over!!");
+  }
