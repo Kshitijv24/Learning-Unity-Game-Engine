@@ -1901,3 +1901,82 @@ public void DecreaseLife(){
   public void GameOver(){
     print("Game Over!!");
   }
+
+DATE: 12-01-2022
+
+- Adding UI Representation to Lives in our Game
+
+- creating and importing lives sprites for our game
+
+- adding another UI Pannel and Image panel for Lives
+
+- resizing and repositioning UI Pannel and Image
+
+- added these lines of code to make our UI Respond to our actual lives count
+
+public GameObject livesHolder;
+
+private int lives = 3;
+
+public void DecreaseLife(){
+    if(lives > 0){
+      lives--;
+      livesHolder.transform.GetChild(lives).gameObject.SetActive(false);
+    }
+}
+
+- Stoping the Candies from spawning after all the lives of the player has been lost
+
+- Stoping Player from moving after all the lives of the player has been lost
+
+- These changes were made in GameManager C# Script
+
+public void GameOver(){
+    CandySpawnerScript.instance.StopCoroutineCandySpawner();
+    GameObject.Find("Player").GetComponent<PlayerController>().canMove = false;
+}
+
+- Creating the Main Menu Screen for our Game
+
+- for that, we first created a new screen called "menu" in Unity
+
+- then we added a background to it
+
+- Creating UI for our menu
+
+- for that, we first added a pannel 
+
+- and two texts because we want to give our menu text "Candy Catch" different color to both of the words
+ that is why we need to create two different text
+  
+- Created two buttons called "Play" and "Exit" for our Menu
+
+- Adding functionality to our Play and Exit buttons in our menu
+
+- for that, we first created an empty game object called "MainMenuController"
+
+- and added a C# Script called "MainMenuControllerScript" to that game object
+
+- in our C# Script we are Creating two public functions called "Play" and "Exit"
+
+- and we are loading a scene called "Game" which is our main game scene whenever we press the Play button
+
+- and we quit our game whenever we press exit in our game menu
+
+- here is C# Script called "MainMenuControllerScript"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenuControllerScript : MonoBehaviour{
+
+  public void Play(){
+    SceneManager.LoadScene("Game");
+  }
+
+  public void Exit(){
+    Application.Quit();
+  }
+}
