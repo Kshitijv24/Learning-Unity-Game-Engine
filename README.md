@@ -1980,3 +1980,42 @@ public class MainMenuControllerScript : MonoBehaviour{
     Application.Quit();
   }
 }
+
+DATE: 13-01-2022
+
+- Adding an HighScore functionality in our game
+
+- first we are creating an UI our HighScore
+
+- added an panel called HighScore
+
+- added an image for the logo of HighScore
+
+- added an text to show the number of HighScore
+
+- added another text to show text HighScore in front of the HighScore Number
+
+- modified the funcion called IncrementScore in our GameManager C# Script
+
+- wiht this
+
+public Text highScoreText;
+
+private void Start(){
+    highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+}
+
+public void IncrementScore(){
+    if (!gameOver){
+      score++;
+      scoreText.text = score.ToString();
+
+      if (score > PlayerPrefs.GetInt("HighScore", 0)){
+        PlayerPrefs.SetInt("HighScore", score);
+        highScoreText.text = score.ToString();
+      }
+    }
+}
+
+- for storing our HighScore In player device we are using a Unity built-in function called "PlayerPrefs"
+	
