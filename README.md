@@ -2039,3 +2039,45 @@ public void ResetScore(){
 - by selecting GameManager C# Script where is our ResetScore() Function exists
 
 - and choosing ResetScore() Function from that Script
+
+DATE: 15-01-2022
+
+- Adding a new Feature of Decreasing Point
+
+- we are adding a Feature in which we are gonna decrease Player Point if the Player Toches a Bad Candy
+
+- we added some sprites for bad candies
+
+- and make them spawn randomly with the good candies
+
+- we created a function in GameManager script called "DecrementScore"
+
+public void DecrementScore(){
+  if (!gameOver){
+    score--;
+    scoreText.text = score.ToString();
+  }
+}
+
+- we created an seprate script for the enemy candies called "EnemeyScript"
+
+- and we are calling DecrementScore Function from GameManager in EnemeyScript using "instance"
+
+- EnemeyScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyScript : MonoBehaviour{
+  private void OnTriggerEnter2D(Collider2D collision){
+    if (collision.gameObject.tag == "Player"){
+      GameManager.instance.DecrementScore();
+      Destroy(gameObject);
+    }
+
+    else if (collision.gameObject.tag == "Boundary"){
+      Destroy(gameObject);
+    }
+  }
+}
