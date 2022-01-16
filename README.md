@@ -2019,3 +2019,23 @@ public void IncrementScore(){
 
 - for storing our HighScore In player device we are using a Unity built-in function called "PlayerPrefs"
 	
+DATE: 14-01-2022
+
+- Creating an Button called "ResetScore" to reset player HighScore
+
+- for resetting our player HighScore we are creating an function called "ResetScore"
+
+- and again using Unit built-in feature called "PlayerPrefs" for deleting the HighScore
+
+- Updated GameManager C# Script
+
+public void ResetScore(){
+    PlayerPrefs.DeleteKey("HighScore");
+    highScoreText.text = "0";
+}
+
+- we are calling it from Unity Inspertor OnClick() Function 
+
+- by selecting GameManager C# Script where is our ResetScore() Function exists
+
+- and choosing ResetScore() Function from that Script
