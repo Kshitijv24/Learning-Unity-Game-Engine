@@ -2081,3 +2081,25 @@ public class EnemyScript : MonoBehaviour{
     }
   }
 }
+
+DATE: 16-01-2022
+
+BREAK
+
+DATE: 17-01-2022
+
+- adding music in our game
+
+- first, we are creating our own music using a Software called "Bosca Ceoil"
+
+- created a simple 4 instrument-based music for our game
+
+- imported it in the unity
+
+- Creating an Empty GameObject and naming it "BackGroundMusic"
+
+- and adding Audio Source to it
+
+- then adding our music file to AudioClip in Audio Source
+
+- with all of that our First Game Project called "Candy Catch" is finished
