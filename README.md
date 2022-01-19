@@ -2103,3 +2103,27 @@ DATE: 17-01-2022
 - then adding our music file to AudioClip in Audio Source
 
 - with all of that our First Game Project called "Candy Catch" is finished
+
+DATE: 18-01-2022
+
+- Creating My Second Project, an Android Game called "Destroy Balls"
+
+- Introduction of the game
+
+- in this game, there are 6 balls in front of the player that is bouncing in a random direction
+
+- and the player can destroy the ball by touching them
+
+- when the player destroys all the balls then a message appeared called "YOU WIN :)"
+
+- Creating an Android Project in Unity
+
+- importing all the Sprites for the game and resizing them according to the player screen
+
+- all the Visual Stuff
+
+- Creating a Boundary for the game so our balls don't go out of the screen
+
+- Creating a You Win text to display when the player Destroy all the balls 
+
+- Creating a Restart Button
