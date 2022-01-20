@@ -2127,3 +2127,62 @@ DATE: 18-01-2022
 - Creating a You Win text to display when the player Destroy all the balls 
 
 - Creating a Restart Button
+
+DATE:	19-01-2022
+	
+- all the Programming Stuff
+
+	- Creating an Physics2D Material to add Bounciness to it
+	
+	- Creating an empty gameobject called GameManager 
+	
+	- Creating an C# Script called "GameManagerScript" and attaching it to the GameManager empty gameobject 
+	
+	- with this script we are adding functionality to both our winText and RestartButton
+	
+	- we are creating an Scrore int variable to store every ball the player Destroy
+	
+	- whenever player destory a ball the we call an function called scoreUP()
+	
+	- in this function we are incrementing the score by one
+	
+	- and if the score is bigger than or equal to 6 the we call another function called "Win()" inside of this function
+	
+	- we also created an function called Restart(), 
+	  which will gonna restart our game whenever player presses that button
+	  
+- "GameManagerScript"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManagerScript : MonoBehaviour
+{
+    public GameObject winText;
+    public GameObject restartButton;
+
+    int score = 0;
+
+    public void scoreUP()
+    {
+        score++;
+        if(score >= 6)
+        {
+            Win();
+        }
+    }
+
+    void Win()
+    {
+        winText.SetActive(true);
+        restartButton.SetActive(true);
+
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Game");
+    }
+}
