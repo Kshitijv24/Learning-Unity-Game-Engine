@@ -2186,3 +2186,32 @@ public class GameManagerScript : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 }
+
+DATE:	20-01-2022
+
+	- Creating an C# Script called "BallScript" and attaching it to the all the Ball GameObject
+	
+	- using OnMouseDown() Function to register the player input 
+	
+	- this function works with both pc with mouse and Android with Touch input
+	
+	- in this script we are using GameObject.Find function to find the GameManagerScript
+	
+	- and calling the scoreUP() function form it
+	
+	- and we are also calling Destroy(gameobject) Unity Function to Destroy the balls gameobject
+	
+- "BallScript"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BallScript : MonoBehaviour
+{
+    private void OnMouseDown()
+    {
+        GameObject.Find("GameManager").GetComponent<GameManagerScript>().scoreUP();
+        Destroy(gameObject);
+    }
+}
