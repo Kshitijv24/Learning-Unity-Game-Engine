@@ -2215,3 +2215,19 @@ public class BallScript : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
+DATE:	21-01-2022
+
+- Adding Music to our game
+	
+	- Designing Audio for our game
+	
+	- we are creating an empty gameobject called "AudioManager"
+	
+	- and attaching an audio source to it
+	
+	- and we are putting our game audio file inside AudioClip 
+	
+	- and cheching the loop box inside Unity Inspector
+
+- with that our Second Game Project is Completed
