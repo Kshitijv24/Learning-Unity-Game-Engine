@@ -2231,3 +2231,19 @@ DATE:	21-01-2022
 	- and cheching the loop box inside Unity Inspector
 
 - with that our Second Game Project is Completed
+
+DATE: 22-01-2022
+
+- Porting our Candy Catch PC Game to Android
+
+- With the knowledge of our previous Android Game Project, now we can Port our PC Game into Android
+
+- for that first, we need to change our project in Unity from pc to android
+
+- and choose a screen resolution that fits our android device
+
+- in this case 2340 x 1080 pixels
+
+- now some of our game UI is goona be cropped out of the screen because of our android phone resolution
+
+- so we are fixing it in the unity scenes by using the Move tool
