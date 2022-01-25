@@ -2339,3 +2339,62 @@ m_Axis.Update(Mathf.MoveTowards(m_Axis.GetValue, 0, responseSpeed * Time.deltaTi
 }
 }
 }
+
+DATE: 24-01-2022
+
+- and we are also doing these changes in our "PlayerController" C# Script
+
+void Move(){
+    xInput = CrossPlatformInputManager.GetAxis("Horizontal");
+    transform.position += Vector3.right * xInput * moveSpeed * Time.deltaTime;
+
+    float xPos = Mathf.Clamp(transform.position.x, -maxPos, maxPos);
+    transform.position = new Vector3(xPos, transform.position.y, transform.position.z);
+}
+
+- our player movement is working with our On-Screen Buttons
+
+- with that our Porting of our pc game to android is Completed
+
+- Learning Android Touch Controls
+
+- Testing touch controls with this
+
+void Update(){
+    Debug.Log(Input.touchCount);
+}
+
+- only checking touch count if there is a touch on the android device
+
+Using->
+
+if (Input.touchCount > 0)
+{
+  Debug.Log(Input.touchCount);
+}
+
+- checking the position of single touch at a time in our android device screen
+
+Using->
+
+Debug.Log(Input.GetTouch(0).position);
+
+- check the position of multiple touches at the same time in our android device screen
+
+- Understanding Touch Phases in Unity
+
+- with the touch phase we can check our touch is in what state, if it began or ended or currently working
+
+Using->
+
+if(Input.GetTouch(0).phase == TouchPhase.Began){
+  Debug.Log("Touch Began");
+}
+
+if (Input.GetTouch(0).phase == TouchPhase.Moved){
+Debug.Log("Touch Moved");
+}
+
+if (Input.GetTouch(0).phase == TouchPhase.Ended){
+  Debug.Log("Touch Ended");
+}
