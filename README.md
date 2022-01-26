@@ -2398,3 +2398,34 @@ Debug.Log("Touch Moved");
 if (Input.GetTouch(0).phase == TouchPhase.Ended){
   Debug.Log("Touch Ended");
 }
+
+DATE:	25-01-2022
+
+- Touch & Destroy Objects with RayCasting in Unity C#
+
+- Understanding RayCasting
+
+	- Creating an ray to be cast from the camera position to the position where our finger touch on the android device
+	
+	- Ray ray;
+	- ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+	
+	- casting that ray that we created an checking if it hit something
+	
+	if (Physics.Raycast(ray, Mathf.Infinity)){
+        Debug.Log("hit something");
+    }
+	
+	- adding visual representation of the ray with a colour
+	
+	Debug.DrawRay(ray.origin, ray.direction * 20, Color.red);
+	
+	- getting informatin about what we are hitting with the ray
+	
+	- and destroying it with that ray
+	
+	RaycastHit hit;
+	if (Physics.Raycast(ray, out hit, Mathf.Infinity)){
+        Debug.Log("hit something");
+        Destroy(hit.transform.gameObject);
+    }
