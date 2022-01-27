@@ -2429,3 +2429,24 @@ DATE:	25-01-2022
         Debug.Log("hit something");
         Destroy(hit.transform.gameObject);
     }
+
+DATE:	26-01-2022
+
+- Learning Accelerometer Inputs in Unity C#
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AccelerometerMovementScript : MonoBehaviour
+{
+    public float speed;
+    private float rotationSpeed = 2f;
+    void Update(){
+        float temp = Input.acceleration.x;
+        float z = Input.acceleration.z;
+        //Debug.Log(temp);
+        transform.Translate(0, 0, -z * speed * Time.deltaTime);
+        transform.Rotate(0, 0, -temp * rotationSpeed);
+    }
+}
