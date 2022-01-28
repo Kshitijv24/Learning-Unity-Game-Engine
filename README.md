@@ -2450,3 +2450,94 @@ public class AccelerometerMovementScript : MonoBehaviour
         transform.Rotate(0, 0, -temp * rotationSpeed);
     }
 }
+
+DATE:	27-01-2022
+
+- Learning Touch Swipe Controls in Unity C#
+
+	- Created an C# Script that will tell us if we swipe left or right horizontal or up and down vertical
+	
+- SwipeTestScrip
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SwipeTestScript : MonoBehaviour
+{
+    public GameObject player;
+
+    public float maxTime;
+    public float minSwipeDistance;
+
+    float startTime;
+    float endTime;
+
+    Vector3 startPos;
+    Vector3 endPos;
+
+    float swipeDistance;
+    float swipeTime;
+
+    void Update(){
+        if(Input.touchCount > 0){
+            
+            Touch touch = Input.GetTouch(0);
+
+            if(touch.phase == TouchPhase.Began){
+                
+                startTime = Time.time;
+                startPos = touch.position;
+            }
+
+            else if(touch.phase == TouchPhase.Ended){
+
+                endTime = Time.time;
+                endPos = touch.position;
+
+                swipeDistance = (endPos - startPos).magnitude;
+                swipeTime = endTime - startTime;
+
+                if(swipeTime < maxTime && swipeDistance > minSwipeDistance){
+                    Swipe();
+                }
+            }
+        }
+    }
+
+    void Swipe(){
+
+        Vector2 distance = endPos - startPos;
+        
+        if(Mathf.Abs(distance.x) > Mathf.Abs(distance.y)){
+
+            Debug.Log("Horizontal Swipe");
+
+            if(distance.x > 0){
+
+                Debug.Log("Right Swipe");
+            }
+
+            else if(distance.x < 0){
+
+                Debug.Log("Left Swipe");
+            }
+        }
+
+        else if(Mathf.Abs(distance.x) < Mathf.Abs(distance.y)){
+
+            Debug.Log("Vertical Swipe");
+
+            if (distance.y > 0){
+
+                Debug.Log("UP Swipe");
+                player.GetComponent<PlayerJumpScript>().Jump();
+            }
+
+            else if (distance.y < 0){
+
+                Debug.Log("Down Swipe");
+            }
+        }
+    }
+}
