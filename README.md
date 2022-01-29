@@ -2541,3 +2541,28 @@ public class SwipeTestScript : MonoBehaviour
         }
     }
 }
+
+DATE:	28-01-2022
+
+	- Creating an cube player game object that will jump when we swipe vertically in our android device
+	
+- PlayerJumpScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerJumpScript : MonoBehaviour
+{
+    public float jumpForce;
+
+    Rigidbody2D rb;
+
+    void Start(){
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void Jump(){
+        rb.AddForce(new Vector2(0, jumpForce));
+    }
+}
