@@ -2566,3 +2566,36 @@ public class PlayerJumpScript : MonoBehaviour
         rb.AddForce(new Vector2(0, jumpForce));
     }
 }
+
+DATE: 29-01-2022
+
+- Creating a joystick controller for our android device
+
+- Created and ball and a joystick controller 
+
+- the ball moves whenever we move our joystick from our android device
+
+- BallScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+
+public class BallScript : MonoBehaviour
+{
+  public float speed;
+
+  Rigidbody rb;
+
+  void Awake(){
+    rb = GetComponent<Rigidbody>();
+  }
+
+  void FixedUpdate(){
+    float horizontalInput = CrossPlatformInputManager.GetAxis("Horizontal") * speed;
+    float verticalInput = CrossPlatformInputManager.GetAxis("Vertical") * speed;
+
+    rb.AddForce(horizontalInput, 0, verticalInput);
+  }
+}
