@@ -2599,3 +2599,66 @@ public class BallScript : MonoBehaviour
     rb.AddForce(horizontalInput, 0, verticalInput);
   }
 }
+
+DATE:	30-01-2022
+
+- Created Responsive UI in Unity
+	
+	- Created an UI that will resize automaticaly according to the screen or device resulation
+
+- Creating Zooming In and Out in Unity with C#
+
+	- Created an C# Script called "CameraZoomscript"
+	
+- CameraZoomscript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraZoomScript : MonoBehaviour
+{
+    public int zoomSpeed2d;
+    public int minZoom2d;
+    public int maxZoom2d;
+
+    public int zoomSpeed3d;
+    public int minZoom3d;
+    public int maxZoom3d;
+
+    void Update(){
+
+        // 2D Camera
+        if (Camera.main.orthographic){
+
+            if(Input.GetAxis("Mouse ScrollWheel") > 0){
+                // Zoom In
+                Camera.main.orthographicSize -= zoomSpeed2d * Time.deltaTime;
+            }
+
+            else if(Input.GetAxis("Mouse ScrollWheel") < 0){
+                // Zoom Out
+                Camera.main.orthographicSize += zoomSpeed2d * Time.deltaTime;
+            }
+
+            // Restrict the Camera from zooming in or out after an particular value
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minZoom2d, maxZoom2d);
+        }
+
+        else{
+            // 3D Camera
+            if (Input.GetAxis("Mouse ScrollWheel") > 0){
+                // Zoom In
+                Camera.main.fieldOfView -= zoomSpeed3d * Time.deltaTime;
+            }
+
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0){
+                // Zoom Out
+                Camera.main.fieldOfView += zoomSpeed3d * Time.deltaTime;
+            }
+
+            // Restrict the Camera from zooming in or out after an particular value
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, minZoom3d, maxZoom3d);
+        }
+    }
+}
