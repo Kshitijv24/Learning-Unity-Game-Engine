@@ -2662,3 +2662,58 @@ public class CameraZoomScript : MonoBehaviour
         }
     }
 }
+
+DATE: 31-01-2022
+
+- Creating a Camera Shake in Unity
+
+- Created and cube and plane so that we can see the camera shake around the cube
+
+- Created and C# Script called CameraShake
+
+- "CameraShake"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraShake : MonoBehaviour
+{
+  public float shakeTime;
+  public float shakeRange;
+   
+  Transform cameraTransform;
+
+  Vector3 originalPosition;
+
+  void Start(){
+     
+    cameraTransform = Camera.main.transform;
+    originalPosition = cameraTransform.position;
+  }
+
+  void Update(){
+
+    if (Input.GetMouseButtonDown(0)){
+      StartCoroutine(ShakeCamera());
+    }
+  }
+
+  IEnumerator ShakeCamera(){
+
+    float elapsedTime = 0;
+
+    while (elapsedTime < shakeTime){
+
+      Vector3 pos = originalPosition + Random.insideUnitSphere * shakeRange;
+      pos.z = originalPosition.z;
+      cameraTransform.position = pos;
+
+      elapsedTime += Time.deltaTime;
+
+      yield return null;
+    }
+
+    cameraTransform.position = originalPosition;
+  }
+}
