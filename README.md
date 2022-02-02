@@ -2717,3 +2717,31 @@ public class CameraShake : MonoBehaviour
     cameraTransform.position = originalPosition;
   }
 }
+
+DATE:	01-02-2022
+
+- Rotating Objects with Mouse
+
+	- Created an Cube gameobject to make it rotate with mouse
+	
+	- Created and C# Script called "RotateWithMouseScript"
+	
+- RotateWithMouseScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RotateWithMouseScript : MonoBehaviour
+{
+    public float rotationSpeed;
+
+    public void OnMouseDrag(){
+
+        float y = Input.GetAxis("Mouse Y") * rotationSpeed;
+        float x = Input.GetAxis("Mouse X") * rotationSpeed;
+
+        transform.Rotate(Vector3.right, y);
+        transform.Rotate(Vector3.down, x);
+    }
+}
