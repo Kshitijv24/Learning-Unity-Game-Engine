@@ -2745,3 +2745,47 @@ public class RotateWithMouseScript : MonoBehaviour
         transform.Rotate(Vector3.down, x);
     }
 }
+
+DATE: 02-02-2022
+
+- Detecting Button Clicks and Calling Functions
+
+- Created a cube with two buttons one called green and another called red
+
+- the cube change color whenever we press one of the two buttons
+
+- we changed the color of the cube with different methods
+
+- one is by calling OnClick Function from unity Inspector
+
+- and another is from the C# Script itself
+
+- both of these methods are in an C# Script called "ColorChangerScript"
+
+- ColorChangerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ColorChangerScript : MonoBehaviour
+{
+  public GameObject cube;
+
+  Button greenButton;
+
+  void Start(){
+    greenButton = GameObject.Find("GreenButton").GetComponent<Button>();
+
+    greenButton.onClick.AddListener(() => ChangeToGreen());
+  }
+
+  public void ChangeToRed(){
+    cube.GetComponent<Renderer>().material.color = Color.red;
+  }
+
+  public void ChangeToGreen(){
+    cube.GetComponent<Renderer>().material.color = Color.green;
+  }
+}
