@@ -2789,3 +2789,56 @@ public class ColorChangerScript : MonoBehaviour
     cube.GetComponent<Renderer>().material.color = Color.green;
   }
 }
+
+DATE: 03-02-2022
+
+- Creating 2D infinite BackGround and a ForeGround
+
+- importing the sprites for the background and foreground
+
+- setting them as texture on a 3d quad
+
+- and setting the wrap mode to repat so that it makes multiple copies of itself
+
+- then creating an C# Script called "BackGroundScript" that will gonna move our background and foreground
+
+- "BackGroundScript"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BackGroundScript : MonoBehaviour
+{
+  Material material;
+  Vector2 offset;
+
+  public int xVelocity;
+  public int yVelocity;
+
+  private void Awake(){
+    material = GetComponent<Renderer>().material;
+  }
+
+  void Update(){
+
+    offset = new Vector2(xVelocity, yVelocity);
+    material.mainTextureOffset += offset * Time.deltaTime;
+  }
+}
+
+- in the C# Script we first get access to the Renderer of the BackGround and ForeGround
+
+- then storing it inside a Material variable called material
+
+- then in the update, we are creating a new offset variable and adding an vector2 to it with the parameters of 
+ the xVelocity and yVelocity which are the public int variable that we will gonna change from the Unity inspector
+  
+- then we are setting the old offset default value to the new offset values
+
+- importing a premade 2d player asset and tweaking its animation speed to matches our background
+ and foreground speed
+  
+- to make it look good we made our background speed half of the foreground speed
+
+- with that, this project is completed
