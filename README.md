@@ -2842,3 +2842,37 @@ public class BackGroundScript : MonoBehaviour
 - to make it look good we made our background speed half of the foreground speed
 
 - with that, this project is completed
+
+	
+DATE: 04-02-2022
+
+- Understanding Navmesh in Unity
+
+- Creating a Monster enemy that will gonna follow our player where ever it goes
+
+- C# Script called "PlayerChaseScript"
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class PlayerChaseScript : MonoBehaviour
+{
+  public GameObject player;
+  NavMeshAgent agent;
+
+  void Start(){
+    agent = GetComponent<NavMeshAgent>();
+  }
+
+  void Update(){
+    agent.SetDestination(player.transform.position);
+  }
+}
+
+- AI monster learn how to avoid obstacles while chasing the player
+
+- AI monster learn how to use stairs
+
+- AI monster learn how to do jump from one position to another position
