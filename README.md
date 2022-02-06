@@ -2876,3 +2876,76 @@ public class PlayerChaseScript : MonoBehaviour
 - AI monster learn how to use stairs
 
 - AI monster learn how to do jump from one position to another position
+
+	
+DATE: 05-02-2022
+
+- Creating a Game called "Little Zig Little Zag"
+
+- Creating a new 3D project in Unity
+
+- Setting the screen Resolution for our game
+
+- Building the Game Level
+
+- Creating a cube and turning it into a platform by changing its scale values to 10 on the x-axis and 10 on the z-axis
+ in unity inspector
+  
+- Creating a 3d Sphere that is gonna be our ball that the player can control 
+
+- adding colors to both of them 
+
+- setting the camera view according to our game view so that it's looking good in the final product
+
+- renaming our cube game object to "PlatformStart" and the sphere to "ball"
+
+- adding physics to our game
+
+- adding rigidbody to our ball
+
+- freezing the ball rotation to the x,y, and z-axis so that it's looks and feel good in our game
+
+- Creating an C# script called "BallController" and adding it to our ball game object
+
+- Creating ball movement so that our ball only move in x and z directions
+
+- and whenever we press the left mouse button our ball should change from x to z and z to x
+
+- BallController C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BallController : MonoBehaviour
+{
+  [SerializeField]
+  private float speed;
+
+  Rigidbody rb;
+
+  private void Awake(){
+
+    rb = GetComponent<Rigidbody>();
+  }
+
+void Start(){
+rb.rigidbody = new vector3 (speed,0,0);
+}
+
+  void Update(){
+
+    if (Input.GetMouseButtonDown(0)){
+      SwitchDirection();
+    }
+  }
+
+  void SwitchDirection(){
+
+    if(rb.velocity.x > 0){
+      rb.velocity = new Vector3(0, 0, speed);
+    }
+    else if(rb.velocity.z > 0){
+      rb.velocity = new Vector3(speed, 0, 0);
+    }
+  }
