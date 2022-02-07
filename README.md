@@ -2949,3 +2949,52 @@ rb.rigidbody = new vector3 (speed,0,0);
       rb.velocity = new Vector3(speed, 0, 0);
     }
   }
+
+	
+DATE:	06-02-2022
+
+- Moving Ball after the first touch
+
+	- done some changes in our BallController script to achive this functionality
+	
+- BallController C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BallController : MonoBehaviour
+{
+    [SerializeField]
+    private float speed;
+
+    Rigidbody rb;
+	bool started;
+
+    private void Awake(){
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update(){
+
+        if (!started){										
+            if (Input.GetMouseButtonDown(0)){				
+                rb.velocity = new Vector3(speed, 0, 0);		
+                started = true;								
+            }												
+        }													
+		
+		if (Input.GetMouseButtonDown(0)){
+            SwitchDirection();
+        }
+    }
+
+    void SwitchDirection(){
+
+        if(rb.velocity.x > 0){
+            rb.velocity = new Vector3(0, 0, speed);
+        }
+        else if(rb.velocity.z > 0){
+            rb.velocity = new Vector3(speed, 0, 0);
+        }
+    }
