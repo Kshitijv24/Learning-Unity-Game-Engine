@@ -2998,3 +2998,82 @@ public class BallController : MonoBehaviour
             rb.velocity = new Vector3(speed, 0, 0);
         }
     }
+
+	
+DATE: 07-02-2022
+
+- Checking when the ball falls off the platform
+
+- done some changes in our BallController script to achieve this functionality
+
+- we are using RayCasting to check if our ball is on the platform or not 
+
+- we are casting Ray from our ball downwards to the platform for 1 unit
+
+- and checking if it is colliding with something or not
+
+- if our ball is on the platform then its gonna keep moving because Raycast is gonna return a value
+ that shows that it returns from something
+
+- and if it is not on the platform then there is nothing to return by Raycast so it is gonna fall
+
+- also adding some game over logic so that the game stop playing if we fall from the platform
+
+- fixing a bug in which our ball stop for stop time before falling from the platform
+
+- to achieve this we are creating a physics material and setting its friction to 0
+
+- and attaching it to the Material Component of the Ball Sphere Collider 
+
+- also attaching it to the Material Component of the Platform Box Collider
+
+- BallController C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BallController : MonoBehaviour
+{
+  [SerializeField]
+  private float speed;
+
+  Rigidbody rb;
+  bool started = false;
+  bool gameOver = false;
+
+  private void Awake(){
+
+    rb = GetComponent<Rigidbody>();
+  }
+
+  void Update(){
+
+    if (!started){
+      if (Input.GetMouseButtonDown(0)){
+        rb.velocity = new Vector3(speed, 0, 0);
+        started = true;
+      }
+    }
+
+    Debug.DrawRay(transform.position, Vector3.down, Color.red);
+
+    if(!Physics.Raycast(transform.position, Vector3.down, 1f)){
+      gameOver = true;
+      rb.velocity = new Vector3(0, -25f, 0);
+    }
+
+    if (Input.GetMouseButtonDown(0) && !gameOver){
+      SwitchDirection();
+    }
+  }
+
+  void SwitchDirection(){
+
+    if(rb.velocity.x > 0){
+      rb.velocity = new Vector3(0, 0, speed);
+    }
+    else if(rb.velocity.z > 0){
+      rb.velocity = new Vector3(speed, 0, 0);
+    }
+  }
