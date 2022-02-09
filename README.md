@@ -3077,3 +3077,44 @@ public class BallController : MonoBehaviour
       rb.velocity = new Vector3(speed, 0, 0);
     }
   }
+
+
+DATE: 08-02-2022
+
+- Making Camera Follow the Ball
+
+- Created an C# Script called "CameraFollow"
+
+- CameraFollow C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+  public GameObject ball;
+  public float lerpRate;
+  public bool gameOver = false;
+
+  Vector3 offset;
+
+  void Start(){
+    offset = ball.transform.position - transform.position;
+  }
+
+  void Update(){
+
+    if (!gameOver){
+      Follow();
+    }
+  }
+
+  void Follow(){
+
+    Vector3 pos = transform.position;
+    Vector3 targetPos = ball.transform.position - offset;
+    pos = Vector3.Lerp(pos, targetPos, lerpRate * Time.deltaTime);
+    transform.position = pos;
+  }
+}
