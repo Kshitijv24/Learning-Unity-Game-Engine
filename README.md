@@ -3118,3 +3118,44 @@ public class CameraFollow : MonoBehaviour
     transform.position = pos;
   }
 }
+
+
+DATE: 09-02-2022
+
+Break
+
+DATE: 10-02-2022
+
+- Making the Platform fall down after the ball goes away
+
+- Creating an empty game object called "TriggerChecker" as a child of Platform game object
+
+- adding box collider2D to it and setting isTrigger property to true
+
+- Creating and adding an C# Script called TriggerCheckerScript to the TriggerChecker game object
+
+- and we are destroying the parent of TriggerChecker game object which is Platform game object
+ after the ball goes away from it
+  
+- TriggerCheckerScript 
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TriggerCheckerScript : MonoBehaviour
+{
+  private void OnTriggerExit(Collider other){
+     
+    if(other.gameObject.tag == "Ball"){
+      Invoke("FallDown", 0.1f);
+    }
+  }
+
+  void FallDown(){
+    GetComponentInParent<Rigidbody>().useGravity = true;
+    GetComponentInParent<Rigidbody>().isKinematic = false;
+
+    Destroy(transform.parent.gameObject, 2f);
+  }
+}
