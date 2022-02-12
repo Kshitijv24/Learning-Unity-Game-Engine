@@ -3159,3 +3159,60 @@ public class TriggerCheckerScript : MonoBehaviour
     Destroy(transform.parent.gameObject, 2f);
   }
 }
+
+	
+DATE:	11-02-2022
+
+- Spawning the Platform
+
+	- making the Platform a Prefab so we can use it with the same properties easly
+	
+	- Creating an empty game object called PlatformSpawner
+	
+	- Creating an C# Script called PlatformSpawnerScript and attaching it to the PlatformSpawner game object
+	
+	- Creating an public GameObject variable in the script and adding the Platform prefab to it
+	
+	- because we want that platform prefab to spawn from that script
+	
+- PlatformSpawnerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlatFormSpawnerScript : MonoBehaviour
+{
+    public GameObject platform;
+
+    Vector3 lastPos;
+    float size;
+
+    void Start(){
+
+        lastPos = platform.transform.position;
+        size = platform.transform.localScale.x;
+
+        for(int i = 0; i < 40; i++){
+            SpawnX();
+        }
+    }  
+
+    void SpawnX(){
+
+        Vector3 pos = lastPos;
+        pos.x += size;
+
+        lastPos = pos;
+        Instantiate(platform, pos, Quaternion.identity);
+    }
+
+    void SpawnZ(){
+
+        Vector3 pos = lastPos;
+        pos.z += size;
+
+        lastPos = pos;
+        Instantiate(platform, pos, Quaternion.identity);
+    }
+}
