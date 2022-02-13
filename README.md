@@ -3216,3 +3216,74 @@ public class PlatFormSpawnerScript : MonoBehaviour
         Instantiate(platform, pos, Quaternion.identity);
     }
 }
+
+			      
+DATE: 12-02-2022
+
+- Creating an AI that will spawn the Platform randomly so that players never get the same level
+
+- Created this AI in the PlatFormSpawnerScript
+
+- PlatFormSpawnerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlatFormSpawnerScript : MonoBehaviour
+{
+  public GameObject platform;
+  public bool gameOver;
+
+  Vector3 lastPos;
+  float size;
+
+  void Start(){
+
+    lastPos = platform.transform.position;
+    size = platform.transform.localScale.x;
+
+    for(int i = 0; i < 40; i++){
+      SpawnPlatfroms();
+    }
+
+InvokeRepeating("SpawnPlatfroms", 1f, 0.2f);
+  }
+
+void Update(){
+if(gameOver){
+  CancelInvoke("SpawnPlatfroms");
+}
+  }
+
+  void SpawnPlatfroms(){
+
+    int random = Random.Range(0, 6);
+
+    if(random < 3){
+      SpawnX();
+    }
+     
+    else if( random >= 3){
+      SpawnZ();
+    }
+  }
+
+  void SpawnX(){
+
+    Vector3 pos = lastPos;
+    pos.x += size;
+
+    lastPos = pos;
+    Instantiate(platform, pos, Quaternion.identity);
+  }
+
+  void SpawnZ(){
+
+    Vector3 pos = lastPos;
+    pos.z += size;
+
+    lastPos = pos;
+    Instantiate(platform, pos, Quaternion.identity);
+  }
+}
