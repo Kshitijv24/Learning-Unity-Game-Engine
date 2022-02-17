@@ -3540,3 +3540,23 @@ public class BallController : MonoBehaviour
     }
   }
 }
+
+DATE: 16-02-2022
+
+- Creating UI Manager and Text Animation
+
+	- Creating two empty game object called UIManager and GameManager
+	
+	- and adding an C# Script called UIManagerScript and GameManagerScript to those empty game objects
+	
+	- Creating UI for our Game
+	
+	- Creating an UI for Game title screen
+	
+	- Creating Your Score and high Score UI
+	
+	- Creating an UI for Game OverScreen
+	
+	- and setting UI Scale Mode to Constant Pixel Size so that our game adjets according to player device
+	
+	- Creating Animations for our Game UI
