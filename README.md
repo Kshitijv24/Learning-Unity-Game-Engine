@@ -3560,3 +3560,55 @@ DATE: 16-02-2022
 	- and setting UI Scale Mode to Constant Pixel Size so that our game adjets according to player device
 	
 	- Creating Animations for our Game UI
+
+	
+DATE: 17-02-2022
+
+- Scripting the UI of our Game
+
+	- making our title screen and game over screen title animation and button functional
+	
+- UIManagerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class UIManagerScript : MonoBehaviour
+{
+    public static UIManagerScript instance;
+
+    public GameObject titlePanel;
+    public GameObject gameOverPanel;
+    public GameObject tapText;
+    public Text score;
+    public Text bestScore;
+
+    public Text littleZigText;
+    public Text littleZagText;
+    public Text highScore;
+
+    private void Awake(){
+        if(instance == null){
+            instance = this;
+        }
+    }
+
+    public void GameStart(){
+
+        tapText.SetActive(false);
+        titlePanel.GetComponent<Animator>().Play("Panel");
+        littleZigText.GetComponent<Animator>().Play("LittleZig");
+        littleZagText.GetComponent<Animator>().Play("LittleZag");
+    }
+
+    public void GameOver(){
+        gameOverPanel.SetActive(true);
+    }
+
+    public void Restart(){
+        SceneManager.LoadScene(0);
+    }
+}
