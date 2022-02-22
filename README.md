@@ -3723,3 +3723,364 @@ public class GameManagerScript : MonoBehaviour
         gameOver = true;
     }
 }
+
+	
+DATE: 21-02-2022
+
+	- with some small bug fixes and some code changes here is all the C# Script for this project
+	
+- BallController C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BallController : MonoBehaviour
+{
+    AudioSource sound;
+
+    public GameObject partical;
+
+    [SerializeField]
+    private float speed;
+
+    Rigidbody rb;
+    bool started = false;
+    bool gameOver = false;
+
+    private void Awake(){
+
+        rb = GetComponent<Rigidbody>();
+        sound = GetComponent<AudioSource>();
+    }
+
+    void Update(){
+
+        if (!started){
+            if (Input.GetMouseButtonDown(0)){
+                rb.velocity = new Vector3(speed, 0, 0);
+                started = true;
+
+                GameManagerScript.instance.StartGame();
+            }
+        }
+
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
+
+        if(!Physics.Raycast(transform.position, Vector3.down, 1f)){
+            gameOver = true;
+            rb.velocity = new Vector3(0, -25f, 0);
+
+            Camera.main.GetComponent<CameraFollow>().gameOver = true;
+
+            GameManagerScript.instance.GameOver();
+        }
+
+        if (Input.GetMouseButtonDown(0) && !gameOver){
+            SwitchDirection();
+        }
+    }
+
+    void SwitchDirection(){
+
+        if(rb.velocity.x > 0){
+            rb.velocity = new Vector3(0, 0, speed);
+        }
+        else if(rb.velocity.z > 0){
+            rb.velocity = new Vector3(speed, 0, 0);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other){
+        
+        if(other.gameObject.tag == "Diamond"){
+
+            GameObject particalGameObject = Instantiate(partical, other.gameObject.transform.position, Quaternion.identity) as GameObject;
+
+            Destroy(other.gameObject);
+            sound.Play();
+            Destroy(particalGameObject, 0.8f);
+        }
+    }
+}
+
+
+- CameraFollow C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+    public GameObject ball;
+    public float lerpRate;
+    public bool gameOver = false;
+
+    Vector3 offset;
+
+    void Start(){
+        offset = ball.transform.position - transform.position;
+    }
+
+    void Update(){
+
+        if (!gameOver){
+            Follow();
+        }
+    }
+
+    void Follow(){
+
+        Vector3 pos = transform.position;
+        Vector3 targetPos = ball.transform.position - offset;
+        pos = Vector3.Lerp(pos, targetPos, lerpRate * Time.deltaTime);
+        transform.position = pos;
+    }
+}
+
+- TriggerCheckerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TriggerCheckerScript : MonoBehaviour
+{
+    private void OnTriggerExit(Collider other){
+        
+        if(other.gameObject.tag == "Ball"){
+            Invoke("FallDown", 0.1f);
+        }
+    }
+
+    void FallDown(){
+        GetComponentInParent<Rigidbody>().useGravity = true;
+        GetComponentInParent<Rigidbody>().isKinematic = false;
+
+        Destroy(transform.parent.gameObject, 2f);
+    }
+}
+
+- PlatFormSpawnerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlatFormSpawnerScript : MonoBehaviour
+{
+    public GameObject platform;
+    public GameObject diamonds;
+    public bool gameOver;
+
+    Vector3 lastPos;
+    float size;
+
+    void Start(){
+
+        lastPos = platform.transform.position;
+        size = platform.transform.localScale.x;
+
+        for(int i = 0; i < 40; i++){
+            SpawnPlatfroms();
+        }
+    }
+
+    public void StartSpawningPlatforms(){
+        InvokeRepeating("SpawnPlatfroms", 1f, 0.2f);
+    }   
+
+    void Update(){
+
+        if (GameManagerScript.instance.gameOver == true){
+            CancelInvoke("SpawnPlatfroms");
+        }
+    }
+
+    void SpawnPlatfroms(){
+
+        int random = Random.Range(0, 6);
+
+        if(random < 3){
+            SpawnX();
+        }
+        
+        else if( random >= 3){
+            SpawnZ();
+        }
+    }
+
+    void SpawnX(){
+
+        Vector3 pos = lastPos;
+        pos.x += size;
+
+        lastPos = pos;
+        Instantiate(platform, pos, Quaternion.identity);
+
+        int randomDimondsX = Random.Range(0, 6);
+        
+        if(randomDimondsX == 1){
+            Instantiate(diamonds, new Vector3(pos.x, pos.y + 1, pos.z), diamonds.transform.rotation);
+        }
+    }
+
+    void SpawnZ(){
+
+        Vector3 pos = lastPos;
+        pos.z += size;
+
+        lastPos = pos;
+        Instantiate(platform, pos, Quaternion.identity);
+
+        int randomDimondsY = Random.Range(0, 6);
+
+        if(randomDimondsY == 2){
+            Instantiate(diamonds, new Vector3(pos.x, pos.y + 1, pos.z), diamonds.transform.rotation);
+        }
+    }
+}
+
+- GameManagerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManagerScript : MonoBehaviour
+{
+    public static GameManagerScript instance;
+
+    public bool gameOver;
+
+    private void Awake(){
+        if(instance == null){
+            instance = this;
+        }
+    }
+
+    void Start(){
+        gameOver = false;
+    }
+
+    public void StartGame(){
+        
+        UIManagerScript.instance.GameStart();
+        ScoreManagerScript.instance.StartScore();
+
+        GameObject.Find("PlatFormSpawner").GetComponent<PlatFormSpawnerScript>().StartSpawningPlatforms();
+    }
+
+    public void GameOver(){
+
+        UIManagerScript.instance.GameOver();
+        ScoreManagerScript.instance.StopScore();
+
+        gameOver = true;
+    }
+}
+
+- UIManagerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class UIManagerScript : MonoBehaviour
+{
+    public static UIManagerScript instance;
+
+    public GameObject titlePanel;
+    public GameObject gameOverPanel;
+    public GameObject tapText;
+    public Text score;
+    public Text bestScore;
+
+    public Text littleZigText;
+    public Text littleZagText;
+    public Text highScore;
+
+    private void Awake(){
+        if(instance == null){
+            instance = this;
+        }
+    }
+
+    void Start(){
+        highScore.text = "HighScore: " + PlayerPrefs.GetInt("highScore").ToString();
+    }
+
+    public void GameStart(){
+
+        tapText.SetActive(false);
+        titlePanel.GetComponent<Animator>().Play("Panel");
+        littleZigText.GetComponent<Animator>().Play("LittleZig");
+        littleZagText.GetComponent<Animator>().Play("LittleZag");
+        highScore.GetComponent<Animator>().Play("HighScore");
+    }
+
+    public void GameOver(){
+
+        score.text = PlayerPrefs.GetInt("scoreKey").ToString();
+        bestScore.text = PlayerPrefs.GetInt("highScore").ToString();
+        gameOverPanel.SetActive(true);
+    }
+
+    public void Restart(){
+        SceneManager.LoadScene(0);
+    }
+}
+
+- ScoreManagerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ScoreManagerScript : MonoBehaviour
+{
+    public static ScoreManagerScript instance;
+
+    public int score;
+    public int highScore;
+
+    private void Awake(){
+        if(instance == null){
+            instance = this;
+        }
+    }
+
+    void Start(){
+        score = 0;
+    }
+
+    void IncrementScore(){
+        score++;
+        PlayerPrefs.SetInt("scoreKey", score);
+    }
+
+    public void StartScore(){
+        InvokeRepeating("IncrementScore", 0.1f, 0.5f);
+    }
+
+    public void StopScore(){
+        CancelInvoke("IncrementScore");
+        PlayerPrefs.SetInt("scoreKey", score);
+
+        if (PlayerPrefs.HasKey("highScore")){
+
+            if(score > PlayerPrefs.GetInt("highScore")){
+                PlayerPrefs.SetInt("highScore", score);
+            }
+        }
+        
+        else{
+            PlayerPrefs.SetInt("highScore", score);
+        }
+    }
+}
+
+- now our game "Little Zig Little Zag" is Completed
