@@ -4084,3 +4084,57 @@ public class ScoreManagerScript : MonoBehaviour
 }
 
 - now our game "Little Zig Little Zag" is Completed
+
+	
+
+DATE: 22-02-2022
+
+- Creating An Game called "Bricks Breaker"
+
+- Creating Sprites for our Game
+
+- Importing Ball Sprite
+
+- Importing Player Paddel Sprite
+
+- Importing the Bricks Sprites
+
+- Creating four Walls that are the boundaries
+
+- our ball and paddle should not go outside of the screen that is where these boundaries are gonna help us 
+ in keeping our ball and player paddle within the screen
+  
+- Creating a Game Level
+
+- Making our Game functional with C# Scripts
+
+- Making Player Paddle movement
+
+- Created and added an C# Script called "PaddelScript"
+
+- PaddelScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+
+public class PaddelScript : MonoBehaviour
+{
+  public float speed;
+
+  private void Update(){
+    float movement = CrossPlatformInputManager.GetAxis("Horizontal");
+    transform.position += new Vector3(movement, 0, 0) * Time.deltaTime * speed;
+
+    transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.88f, 8.88f),transform.position.y,transform.position.z);
+  }
+}
+
+- in PaddelScript we are first Creating Player Paddel Movement
+
+- and then keeping our player paddle within the screen 
+
+- so that our paddle does not go outside of the screen
+
+- we are achieving this using Mathf.Clamp Function
