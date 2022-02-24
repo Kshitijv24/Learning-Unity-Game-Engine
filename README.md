@@ -4138,3 +4138,60 @@ public class PaddelScript : MonoBehaviour
 - so that our paddle does not go outside of the screen
 
 - we are achieving this using Mathf.Clamp Function
+
+	
+DATE: 23-02-2022
+
+- Making our Ball Move
+
+- Created and C# Script called "BallScript"
+
+- and adding it to the Ball GameObject
+
+- BallScript
+
+using UnityEngine;
+
+public class BallScript : MonoBehaviour
+{
+
+public float speed;
+
+Rigidbody2D rb;
+
+private void Awake(){
+    rb = GetComponent<Rigidbody2D>();
+  }
+
+  void Start(){
+    Invoke(nameof(BallRandomStart), 1f);
+  }
+
+  private void BallRandomStart(){
+     
+    Vector2 force = Vector2.zero;
+    force.x = UnityEngine.Random.Range(-0.5f, 0.5f);
+    force.y = -1f;
+
+    rb.AddForce(force.normalized * speed);
+  }
+}
+
+- in BallScript we are doing these things
+
+- first, we are getting access to the Rigidbody2D Component
+
+- then we are creating a Function called BallRandomStart()
+
+- in this function, we are adding force to the ball game object
+
+- and making its first movement random in the x and y-axis
+
+- which means when the game starts ball can either go to the right or left
+
+- it will go just a little right or left so that our ball be on the player's paddle
+
+- and at the end, we are calling the BallRandomStart() Function in the Start Function using Invoke
+
+- so that our Ball first wait for 1 Second then it starts moving so that the player has some breathing room
+ before the game starts
