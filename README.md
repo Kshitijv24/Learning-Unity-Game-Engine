@@ -4195,3 +4195,87 @@ private void Awake(){
 
 - so that our Ball first wait for 1 Second then it starts moving so that the player has some breathing room
  before the game starts
+
+	
+DATE: 24-02-2022
+
+Break
+
+DATE: 25-02-2022
+
+- Destroy our Bricks whenever the ball touches them
+
+- so we are destroying the bricks whenever the ball touches them
+
+- to achive this we are using OnCollisionEnter2D funcion
+
+- and adding the "Brick" tag to all the bricks in the game
+
+- then destroying anything that has that brick tag to it
+
+- we added some code in our "BallScript"
+
+- BallScript
+
+using UnityEngine;
+
+public class BallScript : MonoBehaviour
+{
+
+public float speed;
+
+Rigidbody2D rb;
+
+private void Awake(){
+    rb = GetComponent<Rigidbody2D>();
+  }
+
+  void Start(){
+    Invoke(nameof(BallRandomStart), 1f);
+  }
+
+  private void BallRandomStart(){
+     
+    Vector2 force = Vector2.zero;
+    force.x = UnityEngine.Random.Range(-0.5f, 0.5f);
+    force.y = -1f;
+
+    rb.AddForce(force.normalized * speed);
+  }
+}
+
+private void OnCollisionEnter2D(Collision2D collision){
+     
+    if (collision.gameObject.tag == "Brick"){
+      Destroy(collision.gameObject);
+    }
+}
+
+- Changing the Color of the walls to some random color whenever our ball touch them
+
+- we have four walls in our game 
+
+- and we are changing the color of the 3 walls. top left and right walls
+
+- and adding a C# Script called "OtherWallScript"
+
+- and keeping the down wall separate from that script
+
+- because we need to destroy the ball whenever the ball touch the down wall 
+
+- which means the player lose the game and we need to end the game
+
+- OtherWallScript
+
+using UnityEngine;
+
+public class OtherWallScript : MonoBehaviour
+{
+  private void OnCollisionEnter2D(Collision2D collision){
+
+    if (collision.gameObject.tag == "Ball"){
+
+      GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+    }
+  }
+}
