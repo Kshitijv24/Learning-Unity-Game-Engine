@@ -4279,3 +4279,34 @@ public class OtherWallScript : MonoBehaviour
     }
   }
 }
+
+	
+DATE: 26-02-2022
+
+- now making a C# script for the down wall called "WallScript"
+
+- in this script, we are checking if the game object that is colliding with the wall has a tag called "Ball"
+
+- then we are changing the color of the down wall to red
+
+- then we are destroying the ball
+
+- WallScript
+
+using UnityEngine;
+
+public class WallScript : MonoBehaviour
+{
+  public GameObject gameOverScreen;
+
+  private void OnCollisionEnter2D(Collision2D collision){
+     
+    if (collision.gameObject.tag == "Ball"){
+
+      GetComponent<Renderer>().material.color = Color.red;
+      Destroy(collision.gameObject);
+
+      gameOverScreen.SetActive(true);
+    }
+  }
+}
