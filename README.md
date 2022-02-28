@@ -4310,3 +4310,59 @@ public class WallScript : MonoBehaviour
     }
   }
 }
+
+	
+DATE: 27-02-2022
+
+- adding a feature in the game to fix a game bug
+
+- we see in our playtest that sometimes the ball gets stuck in between the left wall and right wall
+
+- so to fix that we are adding ball shooting mechanics
+
+- in this, we are adding two shooting points in our player paddle one in the left and one in the right
+
+- so whenever we press the fire button on the left or right our paddle goona shoot a ball from that side
+
+- so we can aim for the stuck ball and shoot at it so, which will gonna add more force to it because of it
+ the ball is gonna start moving again
+  
+- to achieve this first we created two empty game objects on the paddle on the left and right
+
+- then Created and added a C# script called "ShootScript" in the left empty game object
+
+- and Created and added a C# script called "ShootingFromRightScript" in the right empty game object
+
+- ShootScript
+
+using UnityEngine;
+
+public class ShootingScript : MonoBehaviour
+{
+  public GameObject bullet;
+
+  GameObject instantiatedObj;
+
+  public void LeftShoot(){
+
+    instantiatedObj = (GameObject)Instantiate(bullet, transform.position, Quaternion.identity);
+    Destroy(instantiatedObj, 0.8f);
+  }
+}
+
+- ShootingFromRightScript
+
+using UnityEngine;
+
+public class ShootingFromRightScript : MonoBehaviour
+{
+  public GameObject bullet;
+
+  GameObject instantiatedObj;
+
+  public void RightShoot(){
+
+    instantiatedObj = (GameObject)Instantiate(bullet, transform.position, Quaternion.identity);
+    Destroy(instantiatedObj, 0.8f);
+  }
+}
