@@ -4366,3 +4366,126 @@ public class ShootingFromRightScript : MonoBehaviour
     Destroy(instantiatedObj, 0.8f);
   }
 }
+
+	
+DATE: 28-02-2022
+
+- Adding UI in our game
+
+- adding a scoreboard on the top wall in the game
+
+- that shows us in real-time how many bricks we have destroyed
+
+- adding time taken on the top wall in the game
+
+- that shows us in real-time how much time it takes us to win or lose our game
+
+- adding the code of these UI features in our BallScript
+
+- BallScript
+
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BallScript : MonoBehaviour
+{
+  public float speed;
+
+  public Text currentTimeText;
+  public Text bricksDestroyedText;
+
+  float currentTime = 0;
+
+  Rigidbody2D rb;
+
+  int bricksCount = 0;
+  int bricksDestroyed = 0;
+
+  private void Awake(){
+    rb = GetComponent<Rigidbody2D>();
+  }
+
+  void Start(){
+    Invoke(nameof(BallRandomStart), 1f);
+  }
+
+  private void BallRandomStart(){
+     
+    Vector2 force = Vector2.zero;
+    force.x = UnityEngine.Random.Range(-0.5f, 0.5f);
+    force.y = -1f;
+
+    rb.AddForce(force.normalized * speed);
+  }
+
+  private void OnCollisionEnter2D(Collision2D collision){
+     
+    if (collision.gameObject.tag == "Brick"){
+       
+      bricksCount++;
+      BricksDestroyedCounter();
+
+      Destroy(collision.gameObject);
+    }
+  }
+
+  private void FixedUpdate(){
+
+    StopWatch();
+  }
+
+  void StopWatch(){
+     
+    // this is for the gameplay timer and bricks counter
+
+    if (bricksCount != 27){
+      currentTime = currentTime + Time.deltaTime;
+    }
+
+    else if(bricksCount == 27){
+      youWinScreen.SetActive(true);
+      Destroy(gameObject);
+    }
+
+    TimeSpan time = TimeSpan.FromSeconds(currentTime);
+    currentTimeText.text = time.Minutes.ToString() + ":" + time.Seconds.ToString();
+  }
+
+  void BricksDestroyedCounter(){
+
+    bricksDestroyed++;
+    bricksDestroyedText.text = bricksDestroyed.ToString() + "/27";
+  }
+}
+	
+
+DATE: 01-03-2022
+
+- adding Game Manager in the game
+
+- created an empty gameobject called GameManager
+
+- and added an C# Script called "GameManagerScript" to it
+
+- GameManagerScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManagerScript : MonoBehaviour
+{
+  public void Restart(){
+
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+  }
+
+  public void Exit(){
+
+    Application.Quit();
+  }
+}
