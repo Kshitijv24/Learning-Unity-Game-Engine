@@ -4936,3 +4936,57 @@ public class PaddelScript : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.88f, 8.88f),transform.position.y,transform.position.z);
     }
 }
+
+	
+DATE: 04-03-2022
+
+- Creating a new game called "Passing Through"
+
+- Introduction
+
+- in this game player is in 1st person and he has to go through from the coming hollow boxes
+
+- to score a point and stay alive, if he doesn't through from those boxes then he losses the game
+
+- Creating the Level
+
+- Creating the player which is just a cube with a box collider
+
+- to make it the first person we made the main camera it's child
+
+- and set it to the edge of the cube, so we can see through from that cube
+
+- Creating the hollow boxes 
+
+- to create a hollow box we made four cubes and resize them accordingly to make a frame kind of object
+
+- which is our hollow box
+
+- we also made the hollow box a prefab so we can use it to instantiate as many times as we want in the level
+
+- Scripting the game
+
+- adding player movement
+
+- created an C# script called "PlayerMovement"
+
+- PlayerMovement C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+  public float speed;
+
+  public Joystick joystick;
+
+  private void Update(){
+
+    float xInput = joystick.Horizontal;
+    float yInput = joystick.Vertical;
+
+    transform.Translate(xInput * speed * Time.deltaTime, yInput * speed * Time.deltaTime, 0);
+  }
+}
