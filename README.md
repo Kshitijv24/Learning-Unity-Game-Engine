@@ -4990,3 +4990,40 @@ public class PlayerMovement : MonoBehaviour
     transform.Translate(xInput * speed * Time.deltaTime, yInput * speed * Time.deltaTime, 0);
   }
 }
+
+	
+DATE: 05-03-2022
+
+- Making Walls(Hollow box) moving
+
+- Created an C# Script called WallsMoving
+
+- added it to the Walls(Hollow box) prefab
+
+- WallsMoving C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WallsMoving : MonoBehaviour
+{
+  SpawningWallsScript spawningWallsScriptRefrance;
+
+  public float wallSpeed;
+
+  private void Awake(){
+    spawningWallsScriptRefrance = GetComponent<SpawningWallsScript>();
+  }
+
+  void Update(){
+
+    transform.position += -transform.forward * wallSpeed * Time.deltaTime;
+  }
+
+  private void OnTriggerEnter(Collider other){
+    if(other.gameObject.tag == "Player"){
+      GameManager.instance.IncrementScore();
+    }
+  }
+}
