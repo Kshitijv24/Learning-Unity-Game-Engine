@@ -5027,3 +5027,99 @@ public class WallsMoving : MonoBehaviour
     }
   }
 }
+
+	
+DATE: 06-03-2022
+
+- making Walls Spawn in random places
+
+	- Created an C# Script called "SpawningWallsScript"
+	
+	- and attached it to an empty game object called "SpawningWalls"
+	
+	- this game object and this C# script handle all the walls spawning stuff
+	
+- SpawningWallsScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawningWallsScript : MonoBehaviour
+{
+    public static SpawningWallsScript instance;
+
+    public GameObject Walls;
+    
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+
+    private void Awake(){
+        instance = this;
+    }
+
+    void Start(){
+        StartSpawningWalls();
+    }
+
+    void SpawnWalls(){
+
+        int xPos = Random.Range(-xPosition, xPosition);
+        int yPos = Random.Range(-yPosition, yPosition);
+
+        Instantiate(Walls, new Vector3(xPos, yPos, transform.position.z), Quaternion.identity);
+    }
+
+    IEnumerator WallsSpawn(){
+
+        yield return new WaitForSeconds(1f);
+
+        while (true){
+            
+            SpawnWalls();
+
+            yield return new WaitForSeconds(2f);
+        }
+        
+    }
+
+    public void StartSpawningWalls(){
+        StartCoroutine("WallsSpawn");
+    }
+
+    public void StopSpawningWalls(){
+        StopCoroutine("WallsSpawn");
+    }
+}
+
+
+DATE: 07-03-2022
+
+	- Created and C# script called "CollisionScript"
+	
+	- and attached it to the Player game object
+	
+	- this script handle all the collision stuff
+	
+- CollisionScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CollisionScript : MonoBehaviour
+{
+    public GameObject Walls;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "WallCol"){
+            transform.DetachChildren();
+            Destroy(gameObject);
+            FindObjectOfType<SpawningWallsScript>().StopSpawningWalls();
+        }
+    }
+}
+
+- also added some PostProssing to the Walls
