@@ -5192,3 +5192,189 @@ public class GameManager : MonoBehaviour
     Application.Quit();
   }
 }
+
+	
+DATE: 09-03-2022
+
+	- here is all the C# Script that we used in this game
+	
+- PlayerMovement
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public float speed;
+
+    public Joystick joystick;
+
+    private void Update(){
+
+        float xInput = joystick.Horizontal;
+        float yInput = joystick.Vertical;
+
+        transform.Translate(xInput * speed * Time.deltaTime, yInput * speed * Time.deltaTime, 0);
+    }
+}
+
+
+- WallsMoving
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WallsMoving : MonoBehaviour
+{
+    SpawningWallsScript spawningWallsScriptRefrance;
+
+    public float wallSpeed;
+
+    private void Awake(){
+        spawningWallsScriptRefrance = GetComponent<SpawningWallsScript>();
+    }
+
+    void Update(){
+
+        transform.position += -transform.forward * wallSpeed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other){
+        if(other.gameObject.tag == "Player"){
+            GameManager.instance.IncrementScore();
+        }
+    }
+}
+
+
+- SpawningWallsScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawningWallsScript : MonoBehaviour
+{
+    public static SpawningWallsScript instance;
+
+    public GameObject Walls;
+    
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+
+    private void Awake(){
+        instance = this;
+    }
+
+    void Start(){
+        StartSpawningWalls();
+    }
+
+    void SpawnWalls(){
+
+        int xPos = Random.Range(-xPosition, xPosition);
+        int yPos = Random.Range(-yPosition, yPosition);
+
+        Instantiate(Walls, new Vector3(xPos, yPos, transform.position.z), Quaternion.identity);
+    }
+
+    IEnumerator WallsSpawn(){
+
+        yield return new WaitForSeconds(1f);
+
+        while (true){
+            
+            SpawnWalls();
+
+            yield return new WaitForSeconds(2f);
+        }
+        
+    }
+
+    public void StartSpawningWalls(){
+        StartCoroutine("WallsSpawn");
+    }
+
+    public void StopSpawningWalls(){
+        StopCoroutine("WallsSpawn");
+    }
+}
+
+
+- CollisionScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CollisionScript : MonoBehaviour
+{
+    public GameObject Walls;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "WallCol"){
+            transform.DetachChildren();
+            Destroy(gameObject);
+            FindObjectOfType<SpawningWallsScript>().StopSpawningWalls();
+            GameManager.instance.gameOver = true;
+            GameManager.instance.gameOverCanvas.SetActive(true);
+        }
+    }
+}
+
+
+- GameManager
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+
+    public GameObject gameOverCanvas;
+
+    public Text scoreText;
+    public Text menuYourScoreText;
+    public Text menuHighScoreText;
+    public int score;
+    public bool gameOver;
+
+    private void Awake(){
+        if (instance == null){
+            instance = this;
+        }
+    }
+
+    private void Start(){
+        menuHighScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+    }
+
+    public void IncrementScore(){
+        if (!gameOver){
+            score++;
+            scoreText.text = score.ToString();
+            menuYourScoreText.text = score.ToString();
+
+            if(score > PlayerPrefs.GetInt("HighScore",0)){
+                PlayerPrefs.SetInt("HighScore", score);
+                menuHighScoreText.text = score.ToString();     
+            }
+        }
+    }
+
+    public void RestartButton(){
+        SceneManager.LoadScene(0);
+    }
+
+    public void ExitButton(){
+        Application.Quit();
+    }
+}
