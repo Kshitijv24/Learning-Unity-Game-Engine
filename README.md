@@ -5378,3 +5378,26 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 }
+
+	
+DATE: 10-03-2022
+
+- Creating a top-down shooter game called "Can You Shoot them"
+
+- importing Game Assets
+
+- importing player model and enemies model
+
+- and assemble them in the Unity
+
+- adding Box Collider2D and Rigidbody2D to the player and the enemies
+
+- Creating Level for the game using Unity Tile-Map System
+
+- and adding TileMap Collider2D at the corner of the level 
+
+- to keep the player and the enemies from getting out of the level
+
+- to achieve this we also need to add the Rigidbody2D and Composite Collider2D to the Tile-Map
+	
+	
