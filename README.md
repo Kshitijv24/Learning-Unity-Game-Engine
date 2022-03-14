@@ -5431,3 +5431,55 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }
+
+	
+DATE: 12-03-2022
+
+Break
+
+DATE: 13-03-2022
+
+- making the player look wherever the mouse is
+
+	- to achive this we first calculated the distance between the mousePosition and the player
+	
+	- than we calculated the angle at which the player need to be so it can look at the mouse
+	
+	- to acive this we used unity built-in function called Mathf.Atan2
+	
+	- after calculating the angle we just rotate the player at that angle
+	
+	- we added these lines of code to the PlayerMovement Script
+	
+- PlayerMovement C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    public Rigidbody2D rb;
+    public Camera cam;
+
+    private Vector2 movement;
+    private Vector2 mousePos;
+
+    void Update(){
+
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private void FixedUpdate(){
+
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+
+        Vector2 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
+    }
+}
