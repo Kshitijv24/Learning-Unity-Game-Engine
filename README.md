@@ -5483,3 +5483,47 @@ public class PlayerMovement : MonoBehaviour
         rb.rotation = angle;
     }
 }
+
+	
+DATE: 14-03-2022
+
+- making Camera Follow the Player Movement
+
+- camera follow the player's movement so that the player always be in the view
+
+- we also made the camera restrict to some area
+
+- so our camera does not show the blank area in the level
+
+- Created an C# Script called "CameraFollow" and added it to the MainCamera Game Object
+
+- CameraFollow C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+  private Transform target;
+
+  public float minX;
+  public float maxX;
+  public float minY;
+  public float maxY;
+
+  private void Awake()
+  {
+    target = GameObject.FindGameObjectWithTag("Player").transform;
+  }
+
+  void FixedUpdate(){
+
+    if (target != null){
+
+      transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+
+      transform.position = new Vector3(Mathf.Clamp(target.position.x, minX, maxX), Mathf.Clamp(target.position.y, maxY, minY), transform.position.z);
+    }
+  }
+}
