@@ -5583,3 +5583,40 @@ public class Shooting : MonoBehaviour
     rb.AddForce(firePointLeft.up * bulletForce, ForceMode2D.Impulse);
   }
 }
+
+	
+DATE: 20-03-2022
+
+- Creating Player Bullet that the Player will Shoot with his Guns that are attached to the Player Hand
+
+	- Importing Bullet Sprite and adding Rigidbody2D and Box Collider2D to it
+	
+	- and making the Box Collider2D "isTrigger"
+	
+	- and Making it a Prefab
+	
+	- Creating and Adding an C# Script called "BulletScript" to the Bullet Prefab
+	
+- BulletScript
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class BulletScript : MonoBehaviour
+{
+    public GameObject hitEffect;
+    public int damage;
+
+    private void OnTriggerEnter2D(Collider2D collision){
+
+        GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+        Destroy(effect, 0.2f);
+        Destroy(gameObject);
+
+        if(collision.tag == "Enemy"){
+            collision.GetComponent<Enemy>().TakeDamage(damage);
+        }
+    }
+}
