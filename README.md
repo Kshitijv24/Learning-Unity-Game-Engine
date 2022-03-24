@@ -5725,3 +5725,52 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 }
+
+	
+DATE: 23-03-2022
+
+- Creating Enemies
+
+- Created an Enemy C# Class that will be the parent class of all the enemies
+
+- We added in this Script all the code that will gonna be used for all the enemies
+
+- Enemy C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+  public float health;
+  public float speed;
+  public float timeBetweenAttacks;
+  public int healthPickupChance;
+  public GameObject healthPickup;
+
+  [HideInInspector]
+  public Transform player;
+
+  public virtual void Start(){
+
+    player = GameObject.FindGameObjectWithTag("Player").transform;
+  }
+
+  public void TakeDamage(float damageAmount){
+     
+    health -= damageAmount;
+
+    if(health <= 0){
+
+      int randomHealth = Random.Range(0, 101);
+       
+      if(randomHealth < healthPickupChance){
+
+        Instantiate(healthPickup, transform.position, Quaternion.identity);
+      }
+
+      Destroy(this.gameObject);
+    }
+  }
+}
