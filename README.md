@@ -5998,3 +5998,47 @@ public class EnemyBulletScript : MonoBehaviour
         }
     }
 }
+
+	
+DATE: 28-03-2022
+
+- Creating an Health Pick Up for the player
+	
+	- importing the Health Pick Up asset
+	
+	- adding Box Collider2D and making it isTrigger
+	
+	- Creating and Adding an C# Script called "HealthPickup"
+	
+	- also adding an pick up partical effect to game object
+
+	
+- HealthPickup C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealthPickup : MonoBehaviour
+{
+    public float healAmount;
+    public GameObject pickUpEffect;
+    private PlayerHealth playerHealth;
+
+    private void Awake(){
+
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision){
+        
+        if(collision.tag == "Player"){
+
+            Instantiate(pickUpEffect, transform.position, Quaternion.identity);
+
+            playerHealth.Heal(healAmount);
+            Destroy(gameObject);
+        }
+        
+    }
+}
