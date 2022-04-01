@@ -6226,3 +6226,42 @@ public class Boss : MonoBehaviour
         rb.rotation = angle;
     }
 }
+
+	
+DATE: 31-03-2022
+
+- made the boss patrol around the level and when his health reaches 50% then he starts chasing the player
+
+- added empty game object as a Patrol_Points of the boss
+
+- added animations for the boss
+
+- and managed all the patrol and chase behavior of the boss from animation state machines by creating 2 C# Script
+
+1. Chase_Behaviour
+2. Patrol_Behaviour
+
+- Chase_Behaviour C# Script
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChaseBehaviour : StateMachineBehaviour
+{
+  private GameObject player;
+  public float speed;
+
+  override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){
+
+    player = GameObject.FindGameObjectWithTag("Player");
+  }
+
+  override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){
+
+    if (player != null){
+
+      animator.transform.position = Vector2.MoveTowards(animator.transform.position, player.transform.position, speed * Time.deltaTime);
+    }
+  }
+}
