@@ -6298,3 +6298,29 @@ public class PatrolBehaviour : StateMachineBehaviour
         }
     }
 }
+
+
+DATE: 03-04-2022
+
+- added custom mouse cursor in the game
+
+	- imported custom mouse cursor asset in the game
+	
+	- Created an C# Script called CursorFollow
+	
+- CursorFollow C# Script
+
+using UnityEngine;
+
+public class CursorFollow : MonoBehaviour
+{
+    private void Start(){
+        Cursor.visible = false;
+    }
+
+    private void Update(){
+        transform.position = Input.mousePosition;
+    }
+}
+
+	- added some more partical effects and sound effect in the game
