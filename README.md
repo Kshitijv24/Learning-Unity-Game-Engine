@@ -6324,3 +6324,26 @@ public class CursorFollow : MonoBehaviour
 }
 
 	- added some more partical effects and sound effect in the game
+
+													       
+DATE: 05-04-2022
+
+	- Added main menu in the game
+	
+	- and created and added an C# script called "LoadNextScene" to an empty game object called Load_Next_Scene
+	
+- LoadNextScene C# Script
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class LoadNextScene : MonoBehaviour
+{
+    public void PlayButton(){
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void ExitButton(){
+        Application.Quit();
+    }
+}
