@@ -6347,3 +6347,44 @@ public class LoadNextScene : MonoBehaviour
         Application.Quit();
     }
 }
+
+													       
+DATE: 06-04-2022
+
+- Added YouWin and YouLose Game Screen
+
+	- added an C# Script called "WinLose" to both of the scenes win and lose
+	
+- WinLose C# Script
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class WinLose : MonoBehaviour
+{
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+}
+
+	- also there was a bug where our mouse cursor does not show when win or lose screen displays
+	
+	- to fix that we created an C# Script called "WinLoseCursor"
+	
+- WinLoseCursor C# Script
+
+using UnityEngine;
+
+public class WinLoseCursor : MonoBehaviour
+{
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
+}
