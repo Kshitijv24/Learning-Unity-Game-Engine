@@ -6388,3 +6388,31 @@ public class WinLoseCursor : MonoBehaviour
         Cursor.visible = true;
     }
 }
+
+													       
+DATE: 07-04-2022
+
+- Adding Level Music in the game
+
+- Created an Empty game object called "Game_Music"
+
+- and added the level music to it
+
+- also added an C# Script called "RandomGameMusic" to that Game_Music game object
+
+- RandomGameMusic C# Script
+
+using UnityEngine;
+
+public class RandomGameMusic : MonoBehaviour
+{
+  private void Start()
+  {
+    DontDestroyOnLoad(gameObject);
+  }
+}
+
+- we created that C# script so that our game music does not stop when the game scenes change from the main menu to
+ the game level
+  
+- With that our Game "NO ENEMY LEFT" is completed.
