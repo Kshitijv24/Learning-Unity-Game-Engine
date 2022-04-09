@@ -6416,3 +6416,79 @@ public class RandomGameMusic : MonoBehaviour
  the game level
   
 - With that our Game "NO ENEMY LEFT" is completed.
+
+													       
+DATE: 08-04-2022
+
+- Going in-depth in Unity C# Programming
+
+- Learning about Delegates
+
+- Created an C# Script called "Delegates_Unity" to learn the basics of Delegates
+
+- Delegates_Unity C# Script
+
+using UnityEngine;
+
+public class Delegates_Unity : MonoBehaviour
+{
+  // declaring delegate Template.
+  private delegate void MyDelegate(int n);
+  // declaring member variable.
+  MyDelegate myDelegate;
+
+  // all the functions must have the same signature as a delegate to be used in the delegate.
+
+  private void Start()
+  {
+    // assigning the PrintNum Function in myDelegate.
+    myDelegate = PrintNum;
+    // using myDelegate as a Function.
+    myDelegate(50);
+
+    // assigning the DoubleNum Function in myDelegate.
+    myDelegate = DoubleNum;
+    // using myDelegate as a Function.
+    myDelegate(50);
+  }
+
+  private void PrintNum(int num)
+  {
+    Debug.Log("Print Num: " + num);
+  }
+
+  private void DoubleNum(int num)
+  {
+    Debug.Log("Double Num: " + num * 2);
+  }
+
+}
+
+- going a little more in-depth in Delegates by seeing different ways of creating Delegates
+
+- Delegates_Code_Monkey C# Script
+
+using UnityEngine;
+
+public class Delegates_Code_Monkey : MonoBehaviour
+{
+  public delegate bool BoolDelegate(int i);
+  BoolDelegate boolDelegate;
+
+  private void Start()
+  {
+    boolDelegate = BoolFunction;
+    Debug.Log(boolDelegate(1));
+
+    // another way of defining the delegate
+    // explicitly creating a delegate
+
+    boolDelegate = new BoolDelegate(BoolFunction);
+    Debug.Log(boolDelegate(2));
+  }
+
+  public bool BoolFunction(int n)
+  {
+    return n < 5;
+  }
+}
