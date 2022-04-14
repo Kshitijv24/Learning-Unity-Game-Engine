@@ -6638,5 +6638,62 @@ public class Built_In_Delegates : MonoBehaviour
   {
     return (i < 5);
   }
+}
+	
+	
+	
+DATE: 13-04-2022
 
+	- Writing Non-Modular Code than converting it to a Modular Code
+	
+	- First Non-Modular Code Example
+	
+- Non_Modular_Timer C# Script
+
+using UnityEngine;
+
+public class Non_Modular_Timer : MonoBehaviour
+{
+    private float timer;
+    
+    public void SetTimer(float timer)
+    {
+        this.timer = timer;
+    }
+
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+    }
+
+    public bool IsTimerComplete()
+    {
+        return timer <= 0f;
+    }
+}
+
+
+- Non_Modular_Delegate C# Script
+
+using UnityEngine;
+
+public class Non_Modular_Delegate : MonoBehaviour
+{
+    [SerializeField] private Non_Modular_Timer timer;
+
+    private bool hasTimerElapsed = false;
+
+    private void Start()
+    {
+        timer.SetTimer(1f);
+    }
+
+    private void Update()
+    {
+        if (!hasTimerElapsed && timer.IsTimerComplete())
+        {
+            Debug.Log("Timer Complete");
+            hasTimerElapsed = true;
+        }
+    }
 }
