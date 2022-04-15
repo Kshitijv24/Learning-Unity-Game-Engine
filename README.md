@@ -6697,3 +6697,65 @@ public class Non_Modular_Delegate : MonoBehaviour
         }
     }
 }
+
+			  
+DATE: 14-04-2022
+
+	- Modular Code Example
+	
+- Modular_Timer C# Script
+
+using UnityEngine;
+using System;
+
+public class Modular_Timer : MonoBehaviour
+{
+    private Action message;
+    private float timer;
+
+    public void SetTimer(float timer, Action message)
+    {
+        this.timer = timer;
+        this.message = message;
+    }
+
+    private void Update()
+    {
+        if(timer > 0f)
+        {
+            timer -= Time.deltaTime;
+
+            if (IsTimerComplete())
+            {
+                message();
+            }
+        }
+    }
+
+    public bool IsTimerComplete()
+    {
+        return timer <= 0f;
+    }
+}
+
+
+- Modular_Delegate C# Script
+
+using UnityEngine;
+
+public class Modular_Delegate : MonoBehaviour
+{
+    [SerializeField] private Modular_Timer modular_Timer;
+
+    private void Start()
+    {
+        modular_Timer.SetTimer(1f, () => Debug.Log("Timer Completed"));
+
+        modular_Timer.SetTimer(1f, MessageDelegate);
+    }
+
+    public void MessageDelegate()
+    {
+        Debug.Log("Timer is Complete");
+    }
+}
