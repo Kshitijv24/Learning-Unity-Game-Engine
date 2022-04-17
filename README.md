@@ -6816,3 +6816,71 @@ public class Events_Scripts : MonoBehaviour
         }
     }
 }
+
+	
+DATE: 16-04-2022
+
+	- Events Subscriber and publisher in diffrent Scripts
+	
+- Event_Publisher C# Script
+
+using UnityEngine;
+using System;
+
+public class Event_Publisher : MonoBehaviour
+{
+    public event EventHandler OnSpacePressed;
+    public event EventHandler OnShiftPressed;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(OnSpacePressed != null)
+            {
+                OnSpacePressed(this, EventArgs.Empty);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(OnShiftPressed != null)
+            {
+                OnShiftPressed(this, EventArgs.Empty);
+            }
+        }
+    }
+}
+
+
+- Event_Subscriber
+
+using UnityEngine;
+using System;
+
+public class Event_Subscriber : MonoBehaviour
+{
+    private void Start()
+    {
+        Event_Publisher event_Publisher = GetComponent<Event_Publisher>();
+
+        event_Publisher.OnSpacePressed += Event_Space_Button_Subscriber_Message;
+        event_Publisher.OnSpacePressed += Event_Left_Shift_Button_Subscriber_Message;
+
+        event_Publisher.OnShiftPressed += Event_Left_Shift_Button_Subscriber_Message;
+    }
+
+    private void Event_Space_Button_Subscriber_Message(object sender, EventArgs eventArgs)
+    {
+        Debug.Log("Space Button is Pressed");
+
+        // removing an Event Function from a Publisher.
+        Event_Publisher event_Publisher = GetComponent<Event_Publisher>();
+        event_Publisher.OnSpacePressed -= Event_Left_Shift_Button_Subscriber_Message;
+    }
+
+    private void Event_Left_Shift_Button_Subscriber_Message(object sender, EventArgs eventArgs)
+    {
+        Debug.Log("Left Shift Button is Pressed");
+    }
+}
