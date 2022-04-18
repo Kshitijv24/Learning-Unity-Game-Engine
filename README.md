@@ -6884,3 +6884,49 @@ public class Event_Subscriber : MonoBehaviour
         Debug.Log("Left Shift Button is Pressed");
     }
 }
+
+	
+DATE: 17-04-2022
+
+	- Creating custom Delegate for Events
+	
+- Event_Custom_Delegate
+
+using UnityEngine;
+
+public class Event_Custom_Delegate : MonoBehaviour
+{
+    public delegate void EventDelegate(float f);
+
+    public event EventDelegate OnFloatEvent;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(OnFloatEvent != null)
+            {
+                OnFloatEvent(5.5f);
+            }
+        }
+    }
+}
+
+
+- Event_Custom_Delegate_Subscirber
+
+using UnityEngine;
+
+public class Event_Custom_Delegate_Subscirber : MonoBehaviour
+{
+    private void Start()
+    {
+        Event_Custom_Delegate event_Custom_Delegate = GetComponent<Event_Custom_Delegate>();
+        event_Custom_Delegate.OnFloatEvent += Event_Custom_Delegate_OnFloatEvent;
+    }
+
+    private void Event_Custom_Delegate_OnFloatEvent(float f)
+    {
+        Debug.Log("float " + f);
+    }
+}
