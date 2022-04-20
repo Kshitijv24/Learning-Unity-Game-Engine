@@ -6996,3 +6996,47 @@ public class EventArga_Subscriber : MonoBehaviour
     Debug.Log("Space is Pressed " + e.spaceCount_In_EventArgs_Class + " times");
   }
 }
+
+	
+DATE: 19-04-2022
+
+	- using Unity Built-in Delegate Action in Events
+	
+- Event_Action_Delegate
+
+using UnityEngine;
+using System;
+
+public class Event_Action_Delegate : MonoBehaviour
+{
+    public event Action<bool, int> OnActionEvent;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(OnActionEvent != null)
+            {
+                OnActionEvent(true, 50);
+            }
+        }
+    }
+}
+
+- Event_Action_Delegate_Subscriber
+
+using UnityEngine;
+
+public class Event_Action_Delegate_Subscriber : MonoBehaviour
+{
+    private void Start()
+    {
+        Event_Action_Delegate event_Action_Delegate = GetComponent<Event_Action_Delegate>();
+        event_Action_Delegate.OnActionEvent += Event_Action_Delegate_OnActionEvent;
+    }
+
+    private void Event_Action_Delegate_OnActionEvent(bool arg1, int arg2)
+    {
+        Debug.Log(arg1 + " " + arg2);
+    }
+}
