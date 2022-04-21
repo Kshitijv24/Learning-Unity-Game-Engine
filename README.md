@@ -7040,3 +7040,39 @@ public class Event_Action_Delegate_Subscriber : MonoBehaviour
         Debug.Log(arg1 + " " + arg2);
     }
 }
+
+	
+DATE: 20-04-2022
+
+	- Built-in Unity Events
+	
+- UnityEvents
+
+using UnityEngine;
+using System;
+using UnityEngine.Events;
+
+public class UnityEvents : MonoBehaviour
+{
+    public UnityEvent OnUnityEvent;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnUnityEvent?.Invoke();
+        }
+    }
+}
+
+- UnityEventsSubscriber
+
+using UnityEngine;
+
+public class UnityEventsSubscriber : MonoBehaviour
+{
+    public void UnityEvent()
+    {
+        Debug.Log("Unity Event Function");
+    }
+}
