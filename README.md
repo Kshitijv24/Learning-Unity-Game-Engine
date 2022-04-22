@@ -7076,3 +7076,45 @@ public class UnityEventsSubscriber : MonoBehaviour
         Debug.Log("Unity Event Function");
     }
 }
+
+	
+DATE: 21-04-2022
+
+- Creating first multiplayer game using Photon engine
+
+	- Setting the photon for the unity project
+	
+- Connecting player to the server
+
+	- Creating a loading scene
+	
+	- Created an empty game object called ConnectToServer
+	
+	- Created an Folder called Scripts
+	
+	- and Created and added an C# Script called ConnectToServer and attached it to the empty game object
+	
+	- in this script we are first connecting the game project to the server
+	
+	- than after it's connected than we are going into main scene
+	
+	- creating an main scene
+	
+- ConnectToServer C# Script
+
+using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+
+public class ConnectToServer : MonoBehaviourPunCallbacks
+{
+    private void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+}
