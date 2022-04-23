@@ -7118,3 +7118,49 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
 }
+
+	
+DATE: 22-04-2022
+
+- Creating Joining and Creating Rooms Functionality
+
+- Added a Join and Create Input Fields and Buttons where players can enter the room name and join it.
+
+- Created an C# Script called MainMenu and attached it to an empty game object called MainMenu
+
+- in this script, we are Creating Functions for joining and Creating rooms
+
+- and we also limited the room to only 2 players at the same time because this is a two-player game
+
+- also creating a Game scene whenever a player creates or join a room then the player will move to the game scene
+
+- MainMenu C# Script
+
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
+
+public class MainMenu : MonoBehaviourPunCallbacks
+{
+  public TMP_InputField createInput;
+  public TMP_InputField joinInput;
+
+  public void CreateRoom()
+  {
+    RoomOptions roomOptions = new RoomOptions();
+    roomOptions.MaxPlayers = 2;
+
+    PhotonNetwork.CreateRoom(createInput.text, roomOptions);
+  }
+
+  public void JoinRoom()
+  {
+    PhotonNetwork.JoinRoom(joinInput.text);
+  }
+
+  public override void OnJoinedRoom()
+  {
+    PhotonNetwork.LoadLevel("Game");
+  }
+}
