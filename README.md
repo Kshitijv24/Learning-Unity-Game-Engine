@@ -7164,3 +7164,38 @@ public class MainMenu : MonoBehaviourPunCallbacks
     PhotonNetwork.LoadLevel("Game");
   }
 }
+
+	
+DATE: 23-04-2022
+
+- Spawning the player on both devices
+
+- Created a Player character and added Photon View Component to it
+
+- because the player needs to be on the network to show on both player's screen
+
+- Created a folder called Resources
+
+- added the player in this folder to make it a prefab
+
+- In-game scene created an empty game object called "SpawnPlayers"
+
+- and added an C# Script called "SpawnPlayers" to that object
+
+- SpawnPlayers C# Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class SpawnPlayers : MonoBehaviour
+{
+  public GameObject player;
+  public float minX, minY, maxX, maxY;
+
+  private void Start()
+  {
+    Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+
+    PhotonNetwork.Instantiate(player.name, randomPosition, Quaternion.identity);
+  }
+}
