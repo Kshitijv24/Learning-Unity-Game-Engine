@@ -7199,3 +7199,51 @@ public class SpawnPlayers : MonoBehaviour
     PhotonNetwork.Instantiate(player.name, randomPosition, Quaternion.identity);
   }
 }
+
+	
+DATE: 24-04-2022
+
+- Creating Player Controller for the players
+
+- Created an C# Script called "PlayerController"
+
+- and added it to the player prefab game object
+
+
+- PlayerController C# Script
+
+using UnityEngine;
+using Photon.Pun;
+using System.Collections;
+
+public class PlayerController : MonoBehaviour
+{
+  public float speed;
+
+  private PhotonView photonView;
+
+  private void Start()
+  {
+    photonView = GetComponent<PhotonView>();
+  }
+
+  private void Update()
+  {
+    if (photonView.IsMine)
+    {
+      Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+      Vector2 moveAmount = moveInput.normalized * speed * Time.deltaTime;
+
+      transform.position += (Vector3)moveAmount;
+}
+  }
+
+
+- now that player movement done
+
+- now we need to sync the player movement on both player's screen
+
+- for that, we are adding a Photon Component called "Photon Transform view classic" to the player prefab
+
+- and checking the Synchronize Position box in that component
+	
