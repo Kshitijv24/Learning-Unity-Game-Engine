@@ -7247,3 +7247,53 @@ public class PlayerController : MonoBehaviour
 
 - and checking the Synchronize Position box in that component
 	
+
+	
+DATE: 25-04-2022
+
+- Spawning Enemies
+
+- Created a Cube as the enemy and gave it a blue color
+
+- and added photon view component to it
+
+- and made emeny a prefab by dragging and dropping him in the Resources folder
+
+- Created and added an C# Script called "Enemy" to the enemy prefab game object
+
+- Enemy C# Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class Enemy : MonoBehaviour
+{
+  public float speed;
+
+  private PlayerController[] players;
+  private PlayerController nearestPlayer;
+
+  private void Start()
+  {
+    players = FindObjectsOfType<PlayerController>();
+  }
+
+  private void Update()
+  {
+    float distanceOne = Vector2.Distance(transform.position, players[0].transform.position);
+    float distanceTwo = Vector2.Distance(transform.position, players[1].transform.position);
+
+    if(distanceOne < distanceTwo)
+    {
+      nearestPlayer = players[0];
+    }
+    else
+    {
+      nearestPlayer = players[1];
+    }
+
+    if(nearestPlayer != null)
+    {
+      transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
+    }
+  }
