@@ -7297,3 +7297,60 @@ public class Enemy : MonoBehaviour
       transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
     }
   }
+
+				 
+DATE: 26-04-2022
+
+- Creating enemies Spawn points
+		
+		- Created some empty game objects and set them where we want the ememies to spawn from
+		
+		- than Created an parrent game object for these Spawn points called "EnemySpawnPoints"
+		
+		- and made all the spawn points children of this parent object
+		
+		- also created an empty game object called "Spawner"
+		
+		- and attached an C# Script called "Spawner" to that empty game object
+		
+
+- Spawner C# Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class Spawner : MonoBehaviour
+{
+    public Transform[] spawnPoints;
+    public GameObject enemy;
+    public float startTimeBetweenSpawns;
+
+    private float timeBetweenSpawns;
+
+    private void Start()
+    {
+        timeBetweenSpawns = startTimeBetweenSpawns;
+    }
+
+    private void Update()
+    {
+        if(PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2)
+        {
+            return;
+        }
+
+        if(timeBetweenSpawns <= 0)
+        {
+            // Spawn Enemies
+
+            Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+
+            PhotonNetwork.Instantiate(enemy.name, spawnPosition, Quaternion.identity);
+            timeBetweenSpawns = startTimeBetweenSpawns;
+        }
+        else
+        {
+            timeBetweenSpawns -= Time.deltaTime;
+        }
+    }
+}
