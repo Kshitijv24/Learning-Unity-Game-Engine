@@ -7354,3 +7354,103 @@ public class Spawner : MonoBehaviour
         }
     }
 }
+
+	
+DATE: 27-04-2022
+
+- Creating Health Points for the player
+
+- Creating a UI for the health points name "Health" and giving it a default value of 10 points
+
+- Creating and C# Script called Health and adding it to the Health game object
+
+- Adding box Collider 2d to the enemy and the player and setting them as isTrigger
+
+- also add rigidbody2D to the enemy and set it to Kinematic
+
+- and adding an Enemy tag to the enemy prefab
+
+- added a photon view component to the health game object
+
+
+- Health C# Script
+
+using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using TMPro;
+
+public class Health : MonoBehaviour
+{
+  public int health;
+  public TextMeshProUGUI healthDisplay;
+
+  private PhotonView photonView;
+
+  private void Start()
+  {
+    photonView = GetComponent<PhotonView>();
+  }
+
+  public void TakeDamage()
+  {
+    photonView.RPC("TakeDamageRPC", RpcTarget.All);
+  }
+
+  [PunRPC]
+  private void TakeDamageRPC()
+  {
+    health--;
+
+    if(health <= 0)
+    {
+      health = 0;
+    }
+
+    healthDisplay.text = health.ToString();
+  }
+}
+
+- we also done some changes in the PlayerController Script
+
+- PlayerController Script
+
+using UnityEngine;
+using Photon.Pun;
+using System.Collections;
+
+public class PlayerController : MonoBehaviour
+{
+  public float speed;
+
+  private PhotonView photonView;
+  private Health healthScript;
+
+  private void Start()
+  {
+    photonView = GetComponent<PhotonView>();
+    healthScript = FindObjectOfType<Health>();
+  }
+
+  private void Update()
+  {
+    if (photonView.IsMine)
+    {
+      Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+      Vector2 moveAmount = moveInput.normalized * speed * Time.deltaTime;
+
+      transform.position += (Vector3)moveAmount;
+    }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (photonView.IsMine)
+    {
+      if (collision.tag == "Enemy")
+      {
+        healthScript.TakeDamage();
+      }
+    }
+  }
+}
