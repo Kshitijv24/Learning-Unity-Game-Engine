@@ -7454,3 +7454,99 @@ public class PlayerController : MonoBehaviour
     }
   }
 }
+
+	
+DATE: 28-04-2022		
+
+- Creating a line using unity Line Renderer that will work as our game main mechanics to kill enemies
+
+	- Setting up the Line Renderer properties according to our game
+	
+	- Adding Line Renderer Functionalities in the PlayerController Script
+	
+- PlayerController Script
+
+using UnityEngine;
+using Photon.Pun;
+using System.Collections;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed;
+
+    private PhotonView photonView;
+    private Health healthScript;
+	private LineRenderer lineRenderer;
+
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+        healthScript = FindObjectOfType<Health>();
+		lineRenderer = FindObjectOfType<LineRenderer>();
+    }
+
+    private void Update()
+    {
+        if (photonView.IsMine)
+        {
+            Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 moveAmount = moveInput.normalized * speed * Time.deltaTime;
+
+            transform.position += (Vector3)moveAmount;
+			
+			lineRenderer.SetPosition(0, transform.position);
+        }
+		else
+        {
+            lineRenderer.SetPosition(1, transform.position);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (photonView.IsMine)
+        {
+            if (collision.tag == "Enemy")
+            {
+                healthScript.TakeDamage();
+            }
+        }
+    }
+}
+		
+	- adding an EdgeCollider2D to our Line Renderer game object
+	
+	- and checking the isTrigger property to ture
+	
+	- Creating a new C# Script called "GoldenRay" and attaching it to our Line Renderer game object
+	
+
+- GoldenRay Script
+
+using UnityEngine;
+using System.Collections.Generic;
+
+public class GoldenRay : MonoBehaviour
+{
+    public List<Vector2> linePoints = new List<Vector2>();
+
+    private LineRenderer lineRenderer;
+    private EdgeCollider2D edgeCollider2d;
+
+    private void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        edgeCollider2d = GetComponent<EdgeCollider2D>();
+    }
+
+    private void Update()
+    {
+        linePoints[0] = lineRenderer.GetPosition(0);
+        linePoints[1] = lineRenderer.GetPosition(1);
+
+        edgeCollider2d.SetPoints(linePoints.ConvertAll(p => (Vector2)transform.InverseTransformPoint(p)));
+    }
+}
+
+
+	- adding an tag called "GoldenRay" to the LineRenderer
