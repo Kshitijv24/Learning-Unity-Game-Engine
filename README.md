@@ -7550,3 +7550,105 @@ public class GoldenRay : MonoBehaviour
 
 
 	- adding an tag called "GoldenRay" to the LineRenderer
+
+	
+DATE: 29-04-2022
+	
+- done some changes in Enemy Script so that our LineRenderer can kill enemies
+
+- Enemy Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class Enemy : MonoBehaviour
+{
+    public float speed;
+
+    private PlayerController[] players;
+    private PlayerController nearestPlayer;
+
+    private void Start()
+    {
+        players = FindObjectsOfType<PlayerController>();
+    }
+
+    private void Update()
+    {
+        float distanceOne = Vector2.Distance(transform.position, players[0].transform.position);
+        float distanceTwo = Vector2.Distance(transform.position, players[1].transform.position);
+
+        if(distanceOne < distanceTwo)
+        {
+            nearestPlayer = players[0];
+        }
+        else
+        {
+            nearestPlayer = players[1];
+        }
+
+        if(nearestPlayer != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
+        }
+    }
+	
+	private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (collision.tag == "GoldenRay")
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+            }
+        }
+    }
+}
+
+
+- Creating a Score System for our game
+	
+	- Creating Score UI in the Canvas
+	
+	- and naming it to Score
+	
+	- and setting it to the top left of the screen
+	
+	- Creating an empty game object called "Score"
+	
+	- and Creating and attaching an C# Script called "Score" to that empty game object
+
+	- also adding an Photon view component to it because we need to call an RPC function from this script
+	  (we call an RPC Function to sync it between all the players or to the network)
+	  
+
+- Score Script
+
+using UnityEngine;
+using Photon.Pun;
+using TMPro;
+
+public class Score : MonoBehaviour
+{
+    public TextMeshProUGUI scoreDisplay;
+
+    public int score = 0;
+    private PhotonView photonView;
+
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
+
+    public void AddScore()
+    {
+        photonView.RPC("AddScoreRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void AddScoreRPC()
+    {
+        score++;
+        scoreDisplay.text = score.ToString();
+    }
+}
