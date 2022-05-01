@@ -7652,3 +7652,133 @@ public class Score : MonoBehaviour
         scoreDisplay.text = score.ToString();
     }
 }
+
+	
+DATE: 30-04-2022
+
+	- done some changes to the enemy script so that when ever an enemy dies a score get incremented
+
+- Enemy Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class Enemy : MonoBehaviour
+{
+    public float speed;
+
+    private PlayerController[] players;
+    private PlayerController nearestPlayer;
+	private Score score;
+
+    private void Start()
+    {
+        players = FindObjectsOfType<PlayerController>();
+		score = FindObjectOfType<Score>();
+    }
+
+    private void Update()
+    {
+        float distanceOne = Vector2.Distance(transform.position, players[0].transform.position);
+        float distanceTwo = Vector2.Distance(transform.position, players[1].transform.position);
+
+        if(distanceOne < distanceTwo)
+        {
+            nearestPlayer = players[0];
+        }
+        else
+        {
+            nearestPlayer = players[1];
+        }
+
+        if(nearestPlayer != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
+        }
+    }
+	
+	private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (collision.tag == "GoldenRay")
+            {
+				score.AddScore();
+                PhotonNetwork.Destroy(this.gameObject);
+            }
+        }
+    }
+}
+
+	- drag and drop Score Text into the Score Script
+
+
+	- Adding Dash Functionality in the game
+
+
+- PlayerController Script
+
+using UnityEngine;
+using Photon.Pun;
+using System.Collections;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed;
+	public float dashSpeed;
+    public float dashTime;
+
+    private PhotonView photonView;
+    private Health healthScript;
+	private LineRenderer lineRenderer;
+	private float resetSpeed;
+
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+        healthScript = FindObjectOfType<Health>();
+		lineRenderer = FindObjectOfType<LineRenderer>();
+		
+		resetSpeed = speed;
+    }
+
+    private void Update()
+    {
+        if (photonView.IsMine)
+        {
+            Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 moveAmount = moveInput.normalized * speed * Time.deltaTime;
+
+            transform.position += (Vector3)moveAmount;
+			
+			lineRenderer.SetPosition(0, transform.position);
+			
+			if (Input.GetKeyDown(KeyCode.Space) && moveInput != Vector2.zero)
+            {
+                StartCoroutine("Dash");
+            }
+        }
+		else
+        {
+            lineRenderer.SetPosition(1, transform.position);
+        }
+    }
+	
+	IEnumerator Dash()
+    {
+        speed = dashSpeed;
+        yield return new WaitForSeconds(dashTime);
+        speed = resetSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (photonView.IsMine)
+        {
+            if (collision.tag == "Enemy")
+            {
+                healthScript.TakeDamage();
+            }
+        }
+    }
+}
