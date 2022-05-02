@@ -7782,3 +7782,109 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+	
+DATE: 01-05-2022
+
+- Create Game Over Screen for the game where players can see their points and can restart the game
+
+- Creating the UI for the game over screen
+
+- Creating a Game Over Text and Score Text
+
+- and Creating a Button Called Restart
+
+- also create a text which says "Waiting for the host to restart"
+
+- Because restart is only be shown to the host player or the player who created the room
+
+- the other player will see this text in the place of the restart button
+
+- done some changes in the Health script to implement these features
+
+
+- Health C# Script
+
+using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using TMPro;
+
+public class Health : MonoBehaviour
+{
+  public int health;
+  public TextMeshProUGUI healthDisplay;
+public GameObject gameOverPannel;
+
+  private PhotonView photonView;
+
+  private void Start()
+  {
+    photonView = GetComponent<PhotonView>();
+  }
+
+  public void TakeDamage()
+  {
+    photonView.RPC("TakeDamageRPC", RpcTarget.All);
+  }
+
+  [PunRPC]
+  private void TakeDamageRPC()
+  {
+    health--;
+
+    if(health <= 0)
+    {
+      health = 0;
+gameOverPannel.SetActive(true);
+    }
+
+    healthDisplay.text = health.ToString();
+  }
+} 
+
+
+- Creating an C# Script called "GameOver"
+
+- and adding it to the GameOver menu(UI)
+
+- added photon view component to our GameOver UI Game object
+
+- GameOver Script
+
+using UnityEngine;
+using TMPro;
+using Photon.Pun;
+
+public class GameOver : MonoBehaviour
+{
+  public TextMeshProUGUI scoreDisplay;
+  public GameObject restartButton;
+  public GameObject waitingText;
+
+  private PhotonView photonView;
+
+  private void Start()
+  {
+    photonView = GetComponent<PhotonView>();
+
+    scoreDisplay.text = FindObjectOfType<Score>().score.ToString();
+
+    if(PhotonNetwork.IsMasterClient == false)
+    {
+      restartButton.SetActive(false);
+      waitingText.SetActive(true);
+    }
+  }
+
+  public void Restart()
+  {
+    photonView.RPC("RestartRPC", RpcTarget.All);
+  }
+
+  [PunRPC]
+  private void RestartRPC()
+  {
+    PhotonNetwork.LoadLevel("Game");
+  }
+}
