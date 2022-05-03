@@ -7888,3 +7888,84 @@ public class GameOver : MonoBehaviour
     PhotonNetwork.LoadLevel("Game");
   }
 }
+
+	
+DATE: 02-05-2022
+
+- adding audio and particles in the game
+
+- Creating an Particle effect for when an enemy dies
+
+- and making it a prefab by dragging and dropping it in a Particle Folder
+
+- making some changes in the Enemy Script so that this particle shows when an enemy dies
+
+
+- Enemy Script
+
+using UnityEngine;
+using Photon.Pun;
+
+public class Enemy : MonoBehaviour
+{
+  public float speed;
+  public GameObject enemyDeathFx;
+
+  private PlayerController[] players;
+  private PlayerController nearestPlayer;
+  private PhotonView photonView;
+  private Score score;
+
+  private void Start()
+  {
+    players = FindObjectsOfType<PlayerController>();
+    photonView = GetComponent<PhotonView>();
+    score = FindObjectOfType<Score>();
+  }
+
+  private void Update()
+  {
+    float distanceOne = Vector2.Distance(transform.position, players[0].transform.position);
+    float distanceTwo = Vector2.Distance(transform.position, players[1].transform.position);
+
+    if(distanceOne < distanceTwo)
+    {
+      nearestPlayer = players[0];
+    }
+    else
+    {
+      nearestPlayer = players[1];
+    }
+
+    if(nearestPlayer != null)
+    {
+      transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
+    }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (PhotonNetwork.IsMasterClient)
+    {
+      if (collision.tag == "GoldenRay")
+      {
+        score.AddScore();
+        photonView.RPC("SpawnParticleRPC", RpcTarget.All);
+        PhotonNetwork.Destroy(this.gameObject);
+      }
+    }
+  }
+
+  [PunRPC]
+  private void SpawnParticleRPC()
+  {
+    Instantiate(enemyDeathFx, transform.position, Quaternion.identity);
+  }
+}
+
+
+- added an audio source to the enemy particle prefab
+
+- and drag and drop the audio in the AudioClip
+
+- and check the Play On Awake box
