@@ -7969,3 +7969,67 @@ public class Enemy : MonoBehaviour
 - and drag and drop the audio in the AudioClip
 
 - and check the Play On Awake box
+
+				 
+DATE: 03-05-2022
+
+- adding Nick Names to the Players so both the player can type their names when they create or join a room
+
+- added an input field for the names in the MainMenu
+
+- done some changes in the MainMenu Script to add the name functionality
+
+
+- MainMenu Script
+
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
+
+public class MainMenu : MonoBehaviourPunCallbacks
+{
+  public TMP_InputField createInput;
+  public TMP_InputField joinInput;
+  public TMP_InputField nameInput;
+
+  public void ChangeName()
+  {
+    PhotonNetwork.NickName = nameInput.text;
+  }
+
+  public void CreateRoom()
+  {
+    RoomOptions roomOptions = new RoomOptions();
+    roomOptions.MaxPlayers = 2;
+
+    PhotonNetwork.CreateRoom(createInput.text, roomOptions);
+  }
+
+  public void JoinRoom()
+  {
+    PhotonNetwork.JoinRoom(joinInput.text);
+  }
+
+  public override void OnJoinedRoom()
+  {
+    PhotonNetwork.LoadLevel("Game");
+  }
+}
+
+
+- On the name input field we click on the add or plus sign in the On Value Changed Property
+
+- and added that ChangeName function that we just created in the MainMenu Script
+
+- adding a canvas in the player prefab for the name text to be shown
+
+- and setting it to the world space 
+
+- and adding a Text element in the canvas for the name
+
+- and resizing it to where we want to see the names of the players 
+
+- usually just above the player's head
+
+- after all that we apply all the changes to the player prefab so these changes get saved
