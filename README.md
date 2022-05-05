@@ -8033,3 +8033,95 @@ public class MainMenu : MonoBehaviourPunCallbacks
 - usually just above the player's head
 
 - after all that we apply all the changes to the player prefab so these changes get saved
+
+	    
+	    
+DATE: 04-05-2022
+	
+	
+	- now we need to update the text whenever player enter a name
+	
+	- to do this we done some changes in the PlayerController Script
+		
+		
+- PlayerController Script
+
+using UnityEngine;
+using Photon.Pun;
+using System.Collections;
+using TMPro;
+
+public class PlayerController : MonoBehaviour
+{
+    public float speed;
+    public float dashSpeed;
+    public float dashTime;
+    public float minX, maxX, minY, maxY;
+    public TextMeshProUGUI nameDisplay;
+
+    private PhotonView photonView;
+    private Health healthScript;
+    private LineRenderer lineRenderer;
+    private float resetSpeed;
+
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+        healthScript = FindObjectOfType<Health>();
+        lineRenderer = FindObjectOfType<LineRenderer>();
+        resetSpeed = speed;
+
+        if (photonView.IsMine)
+        {
+            nameDisplay.text = PhotonNetwork.NickName;
+        }
+        else
+        {
+            nameDisplay.text = photonView.Owner.NickName;
+        }
+    }
+
+    private void Update()
+    {
+        if (photonView.IsMine)
+        {
+            Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 moveAmount = moveInput.normalized * speed * Time.deltaTime;
+
+            transform.position += (Vector3)moveAmount;
+
+            //Wrap();
+
+            lineRenderer.SetPosition(0, transform.position);
+
+            if (Input.GetKeyDown(KeyCode.Space) && moveInput != Vector2.zero)
+            {
+                StartCoroutine("Dash");
+            }
+        }
+        else
+        {
+            lineRenderer.SetPosition(1, transform.position);
+        }
+    }
+
+    IEnumerator Dash()
+    {
+        speed = dashSpeed;
+        yield return new WaitForSeconds(dashTime);
+        speed = resetSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (photonView.IsMine)
+        {
+            if (collision.tag == "Enemy")
+            {
+                healthScript.TakeDamage();
+            }
+        }
+    }
+}
+
+	- with that our first multiplayer game is complete
